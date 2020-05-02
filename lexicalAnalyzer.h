@@ -1,11 +1,11 @@
 #include<stdio.h>
 #include<string.h>
 
-bool isVariable();
+bool isVariable(struct lexeme* lex, char* arr, int right, int left);
 bool isInteger(struct lexeme* lex, char* arr, int right, int left);
-bool isString();
-bool IsBoolean();
-bool isFloat();
+bool isString(struct lexeme* lex, char* arr, int right, int left);
+bool IsBoolean(struct lexeme* lex, char* arr, int right, int left);
+bool isFloat(struct lexeme* lex, char* arr, int right, int left);
 bool isKeyword(struct lexeme* lex, char* arr, int right, int left);
 
  
@@ -16,6 +16,14 @@ struct lexeme {
 	char* lex;
 
 };
+struct lexeme {
+
+	int len;
+	char* lex;
+	bool ret;
+
+};
+
 */
 
 //zero

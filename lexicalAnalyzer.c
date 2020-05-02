@@ -10,8 +10,6 @@ struct lexeme {
 	bool ret;
 
 };
-
-
 /* this funtion is for isFloat, isInterger ,isString
    DON'T use for isVariable or isKeyword or isBool !!! 
 
@@ -53,6 +51,40 @@ char convert(char* arr , int start){
 bool isVariable(struct lexeme * lex, char* arr, int right, int left){
 
 	//char* converted = convert(arr,left);
+	struct tokenTree *tmp = intHead;
+	bool tmp_ret = false;
+	int count =0;
+	lex->ret=false;
+	/* level*/ 
+	while(tmp!=NULL){
+		while(tmp!=NULL){
+			if(tmp->alpha==arr[left])
+				break;
+			else
+				tmp=tmp->sibState;
+		}
+		count ++;
+		/* There is no state for this array */
+		if(tmp==NULL){
+			break;
+		}
+		/* Store things for lex */
+		// I'm not sure this position is right
+		lex->len = count;
+		lex->lex = NULL;
+		lex->ret=tmp->ret;
+		//
+		left++;
+		tmp = tmp->childState;
+	}
+
+	if(lex->ret){
+		lex->lex = "typeVar";
+		return true;
+	}
+
+	else
+		return false;
 
 }
 
@@ -87,7 +119,7 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 			
 	}
 	if(lex->ret){
-		lex->lex = "integer";
+		lex->lex = "INT";
 		return true;
 	}
 
