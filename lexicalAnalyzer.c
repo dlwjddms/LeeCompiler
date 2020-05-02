@@ -39,8 +39,11 @@ char convert(char* arr , int start){
 
 		else if(value=='-')
 			output='s';
-		
-		else if (value==' '||value=="\n")
+	
+		else if(value=='.')
+			output='d';	
+
+		else if (value==' '||value=='\n')
 			output='b';
 		else
 			output='0';
@@ -105,12 +108,23 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 					if(first){
 						if(converted =='z'){
 							converted = convert(arr,left+count+1);
-							assert(converted !='z'&&converted!='n');
+							//char findingdot = convert(arr,left+count+2);
+							/*this should be outside or not ..? of first think more
+							if(converted == 'd')
+								isFloat();
+							else	
+							*/
+								assert(converted !='z'&&converted!='n');
 
 							}
 
 						else if(converted =='s'){
 							converted = convert(arr,left+count+1);
+							/* this should be outside or not .. ? of first think more
+							char findingdot = convert(arr,left+count+2);
+								if(findingdot == 'd')
+									isFloat();
+							*/
 							assert(converted !='z');
 
 							}
@@ -227,6 +241,49 @@ bool isBoolean(struct lexeme* lex, char* arr, int right, int left){
 		return false;
 
 }
+
+
+
+bool isKeyword(struct lexeme* lex, char* arr, int right, int left){
+
+	struct tokenTree *tmp = keyHead;
+	bool tmp_ret = false;
+	int count =0;
+	lex->ret=false;
+	/* level*/ 
+	while(tmp!=NULL){
+		while(tmp!=NULL){
+			if(tmp->alpha==arr[left])
+				break;
+			else
+				tmp=tmp->sibState;
+		}
+		count ++;
+		/* There is no state for this array */
+		if(tmp==NULL){
+			break;
+		}
+		/* Store things for lex */
+		// I'm not sure this position is right
+		lex->len = count;
+		lex->lex = NULL;
+		lex->ret=tmp->ret;
+		//
+		left++;
+		tmp = tmp->childState;
+	}
+
+	if(lex->ret){
+		lex->lex = "KeyWord";
+		return true;
+	}
+
+	else
+		
+		return false;
+
+}
+
 
 bool isWhiteSpace(struct lexeme* lex, char* arr, int right, int left){
 

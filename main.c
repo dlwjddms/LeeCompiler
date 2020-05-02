@@ -49,12 +49,10 @@ struct symbolTable*  lexicalAnaylzer(char* arr){
 		if(ret)
 			goto insert;
 
-/*
 		ret = isKeyword(lex,arr,right,left);
 		if(ret)
 			goto insert;
 
-*/
 		ret = isBoolean(lex,arr,right,left);
 		if(ret)
 			goto insert;
@@ -130,9 +128,8 @@ int main(){
 	struct symbolTable *tail=(struct symbolTable*)malloc(sizeof(struct symbolTable));
 
 
-	char *buffer;
     int size;
-    int count;
+    int count=1;
 
     FILE *r_fp = fopen("hello.txt", "r");    // hello.txt 파일을 읽기 모드(r)로 열기.
                                            // 파일 포인터를 반환
@@ -140,13 +137,27 @@ int main(){
     fseek(r_fp, 0, SEEK_END);    // 파일 포인터를 파일의 끝으로 이동시킴
     size = ftell(r_fp);          // 파일 포인터의 현재 위치를 얻음
 
-    buffer = malloc(size + 1);    // 파일 크기 + 1바이트(문자열 마지막의 NULL)만큼 동적 메모리 할당
-    memset(buffer, 0, size + 1);  // 파일 크기 + 1바이트만큼 메모리를 0으로 초기화
-
+	char *lineBuf;
+    lineBuf = malloc(size + 1);    // 파일 크기 + 1바이트(문자열 마지막의 NULL)만큼 동적 메모리 할당
+    memset(lineBuf, 0, size + 1);  // 파일 크기 + 1바이트만큼 메모리를 0으로 초기화
     fseek(r_fp, 0, SEEK_SET);                // 파일 포인터를 파일의 처음으로 이동시킴
-    count = fread(buffer, size, 1, r_fp);    // hello.txt에서 파일 크기만큼 값을 읽음
+   // count = fread(buffer, size, 1, r_fp);    // hello.txt에서 파일 크기만큼 값을 읽음
+	char*buffer =malloc(size+1);
+	while(fgets(lineBuf,size,r_fp)!=NULL){
+		count++;
+		char*Tmp ;
+		Tmp = malloc(size*count + 1);  
+		strcpy(Tmp ,buffer);
+		realloc(buffer,size*count + 1);  
+		strcat(Tmp,lineBuf);	
+		buffer=Tmp;
+		Tmp=NULL;
+	}
 
+    free(lineBuf);   // 동적 메모리 해제
+	printf("%s\n",buffer);
 	head = lexicalAnaylzer(buffer);
+
 
 	 fclose(r_fp);     // 파일 포인터 닫기
 
