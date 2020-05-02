@@ -1,3 +1,9 @@
-INT : 12345
-INT : 
-INT : 
+typeVar : int
+WS :  
+INT : -123
+WS :  
+typeVar : bool
+WS :   
+BOOL : TRUE
+WS :  
+BOOL : true

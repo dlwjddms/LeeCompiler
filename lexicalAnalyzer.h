@@ -7,6 +7,7 @@ bool isString(struct lexeme* lex, char* arr, int right, int left);
 bool IsBoolean(struct lexeme* lex, char* arr, int right, int left);
 bool isFloat(struct lexeme* lex, char* arr, int right, int left);
 bool isKeyword(struct lexeme* lex, char* arr, int right, int left);
+bool isWhiteSpace(struct lexeme* lex, char* arr, int right, int left);
 
  
 /*

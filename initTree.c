@@ -205,12 +205,10 @@ void initString(){
 	return ;
 }
 
-void initInteger(){
-	//end of sibling
 
-	struct tokenTree* eLevel= (struct tokenTree*)malloc(sizeof(struct tokenTree)) ;		
-	eLevel->alpha ='e';
-	
+//inteder error 011 or -0 or -01212
+void initInteger(){
+
 	/* Start state for varable tree */
 	//intHead ->ret = false;
 	
@@ -224,8 +222,7 @@ void initInteger(){
 	fLevel1->sibState = NULL;
 	fLevel1->childState = NULL;
 
-
-struct tokenTree *fLevel2 = (struct tokenTree*)malloc(sizeof(struct tokenTree)) ;		
+	struct tokenTree *fLevel2 = (struct tokenTree*)malloc(sizeof(struct tokenTree)) ;		
 	fLevel1 ->sibState = fLevel2;		
     fLevel2 -> alpha = 's';
 	fLevel2 -> ret =false;
@@ -237,7 +234,7 @@ struct tokenTree *fLevel2 = (struct tokenTree*)malloc(sizeof(struct tokenTree)) 
 	fLevel2 ->sibState = fLevel3;		
     fLevel3 -> alpha = 'n';
 	fLevel3 -> ret =true;
-	fLevel3->sibState = eLevel;
+	fLevel3->sibState = NULL;
 	fLevel3->childState = NULL;
 
   	/* For level 2 */
@@ -253,7 +250,7 @@ struct tokenTree *fLevel2 = (struct tokenTree*)malloc(sizeof(struct tokenTree)) 
 	sLevel3 ->sibState = sLevel4;		
     sLevel4 -> alpha = 'z';
 	sLevel4 -> ret =true;
-	sLevel4->sibState = eLevel;
+	sLevel4->sibState = NULL;
 	sLevel4->childState = NULL;
 
 	fLevel2 -> childState = fLevel3->childState;
@@ -263,7 +260,6 @@ struct tokenTree *fLevel2 = (struct tokenTree*)malloc(sizeof(struct tokenTree)) 
 	sLevel3 ->childState = fLevel3->childState;
 	sLevel4 ->childState = fLevel3->childState;
 
-	printf("\n111 --- %c\n",intHead->alpha);
 	return ;
 }
 

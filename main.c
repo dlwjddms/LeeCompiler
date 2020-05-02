@@ -40,19 +40,26 @@ struct symbolTable*  lexicalAnaylzer(char* arr){
 		struct lexeme *lex = (struct lexeme*)malloc(sizeof(struct lexeme));
 
 		bool ret = false ;
-		/*
+//	임시임;;;
+		ret = isWhiteSpace(lex,arr,right,left);
+		if(ret)
+			goto insert;
+
 		ret = isVariable(lex,arr,right,left);
 		if(ret)
 			goto insert;
 
+/*
 		ret = isKeyword(lex,arr,right,left);
 		if(ret)
 			goto insert;
 
+*/
 		ret = isBoolean(lex,arr,right,left);
 		if(ret)
 			goto insert;
 
+/*
 		ret = isFloat(lex,arr,right,left);
 		if(ret)
 			goto insert;
@@ -65,7 +72,6 @@ struct symbolTable*  lexicalAnaylzer(char* arr){
 		if(ret)
 			goto insert;
 
-	printf("3333\n");
 
 		/* when you are here there is no more valid token error is needed  */
 		free(lex);
@@ -78,11 +84,14 @@ struct symbolTable*  lexicalAnaylzer(char* arr){
 		newNode-> prev = NULL;
 		newNode-> name = lex->lex;
 
+		printf("55: %s \n",newNode->name);
 		char*tmp =(char*)malloc(sizeof(char)*(lex->len)) ;
-		for(int i= left; i<right ; i++){
+		for(int i=0; i<lex->len ;i++){
 			//strcat(tmp,&arr[i]);
-			tmp[i]=arr[i];
+			tmp[i]=arr[left+i];
 		}
+		printf("\n 66: %s \n",tmp);
+		printf("count: %d left: %d, right:%d \n\n",lex->len,left,right);
 		newNode-> value= tmp;
 
 		if(firstInsert){
@@ -101,7 +110,7 @@ struct symbolTable*  lexicalAnaylzer(char* arr){
 		left = right;
 		free(lex);
 	}
-//!~!!~!!!~!~!!!
+
 //	freeTree();
 /*
 	struct symbolTable *tail=(struct symbolTable*)malloc(sizeof(struct symbolTable));
@@ -139,7 +148,6 @@ int main(){
 
 	head = lexicalAnaylzer(buffer);
 
-                    // Hello world! size: 13, count: 1: 파일의 내용, 파일 크기, 읽은 횟수 출력
 	 fclose(r_fp);     // 파일 포인터 닫기
 
     free(buffer);   // 동적 메모리 해제

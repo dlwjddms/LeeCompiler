@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<string.h>
+#include<assert.h>
 #include<stdbool.h>
 #include "initTree.h"
 
@@ -39,7 +40,7 @@ char convert(char* arr , int start){
 		else if(value=='-')
 			output='s';
 		
-		else if (value==' ')
+		else if (value==' '||value=="\n")
 			output='b';
 		else
 			output='0';
@@ -51,7 +52,7 @@ char convert(char* arr , int start){
 bool isVariable(struct lexeme * lex, char* arr, int right, int left){
 
 	//char* converted = convert(arr,left);
-	struct tokenTree *tmp = intHead;
+	struct tokenTree *tmp = varHead;
 	bool tmp_ret = false;
 	int count =0;
 	lex->ret=false;
@@ -94,19 +95,39 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 	bool tmp_ret = false;
 	int count =0;
 	lex->ret=false;
+	bool first = true;
 	/* level*/ 
 	while(tmp!=NULL){
 			char converted = convert(arr,left+count);
 
-				while(tmp->alpha!='e'){
-				if(tmp->alpha==converted)
-						break;
+				while(tmp!=NULL){
+				if(tmp->alpha==converted){
+					if(first){
+						if(converted =='z'){
+							converted = convert(arr,left+count+1);
+							assert(converted !='z'&&converted!='n');
+
+							}
+
+						else if(converted =='s'){
+							converted = convert(arr,left+count+1);
+							assert(converted !='z');
+
+							}
+
+						else
+							first =false;
+						first =false;
+						}
+
+					break;
+					}
 				else
 					tmp=tmp->sibState;
 			}
 			count ++;
 			/* There is no state for this array */
-			if(tmp->alpha=='e'){
+			if(tmp==NULL){
 				 break;
 			}
 			/* Store things for lex */
@@ -129,7 +150,114 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 
 bool isString(struct lexeme* lex, char* arr, int right, int left){
 
-	char converted = convert(arr,left);
+	struct tokenTree *tmp = strHead;
+	bool tmp_ret = false;
+	int count =0;
+	lex->ret=false;
+	/* level*/ 
+	while(tmp!=NULL){
+			char converted = convert(arr,left+count);
+
+				while(tmp!=NULL){
+				if(tmp->alpha==converted)
+						break;
+				else
+					tmp=tmp->sibState;
+			}
+			count ++;
+			/* There is no state for this array */
+			if(tmp==NULL){
+				 break;
+			}
+			/* Store things for lex */
+			// I'm not sure this position is right
+			lex->len = count;
+			lex->lex = NULL;
+			lex->ret=tmp->ret;
+
+			tmp = tmp->childState;
+			
+	}
+	if(lex->ret){
+		lex->lex = "STRING";
+		return true;
+	}
+
+	else
+		return false;
+}
+
+
+
+bool isBoolean(struct lexeme* lex, char* arr, int right, int left){
+
+	struct tokenTree *tmp = boHead;
+	bool tmp_ret = false;
+	int count =0;
+	lex->ret=false;
+	/* level*/ 
+	while(tmp!=NULL){
+		while(tmp!=NULL){
+			if(tmp->alpha==arr[left])
+				break;
+			else
+				tmp=tmp->sibState;
+		}
+		count ++;
+		/* There is no state for this array */
+		if(tmp==NULL){
+			break;
+		}
+		/* Store things for lex */
+		// I'm not sure this position is right
+		lex->len = count;
+		lex->lex = NULL;
+		lex->ret=tmp->ret;
+		//
+		left++;
+		tmp = tmp->childState;
+	}
+
+	if(lex->ret){
+		lex->lex = "BOOL";
+		return true;
+	}
+
+	else
+		return false;
 
 }
+
+bool isWhiteSpace(struct lexeme* lex, char* arr, int right, int left){
+
+	struct tokenTree *tmp ;//= strHead;
+	bool tmp_ret = false;
+	int count =0;
+	lex->ret=false;
+	/* level*/ 
+	while(1){
+			char converted = convert(arr,left+count);
+
+				if('b'==converted){
+						/* Store things for lex */
+						// I'm not sure this position is right
+						count ++;
+						lex->len = count;
+						lex->lex = NULL;
+						lex->ret = true;
+				}
+				else
+				 break;
+				
+	}
+	if(lex->ret){
+		lex->lex = "WS";
+		return true;
+	}
+
+	else
+		return false;
+}
+
+
 
