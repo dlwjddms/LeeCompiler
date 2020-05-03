@@ -9,6 +9,7 @@ struct lexeme {
 	int len;
 	char* lex;
 	bool ret;
+	bool val;
 
 };
 /* this funtion is for isFloat, isInterger ,isString
@@ -21,17 +22,21 @@ struct lexeme {
  blank -> \t
 
 */
-char convert(char* arr , int start){
+char convert(char* arr , int start, bool Str){
 	
 	//char*input = arr;
 	char output;
 	int i=start;
 	//while(arr[i]!=NULL){
 	char value = arr[i];
-		if(value =='0')//zero
+
+		 if(Str && (value =='0'||value=='1'||value=='2'||value=='3'||value=='4'||value=='5'||value=='6'||value=='7'||value=='8'||value=='9'))
+			output='d';
+
+		else if(!Str && value =='0')//zero
 			output='z';
 		
-		else if(value=='1'||value=='2'||value=='3'||value=='4'||value=='5'||value=='6'||value=='7'||value=='8'||value=='9')
+		else if(!Str && (value=='1'||value=='2'||value=='3'||value=='4'||value=='5'||value=='6'||value=='7'||value=='8'||value=='9'))
 			output='n';
 
 		else if(value=='q'||value=='w'||value=='e'||value=='r'||value=='t'||value=='y'||value=='u'||value=='i'||value=='o'||value=='p'||value=='a'||value=='s'||value=='d'||value=='f'||value=='g'||value=='h'||value=='j'||value=='k'||value=='l'||value=='z'||value=='x'||value=='c'||value=='v'||value=='b'||value=='n'||value=='m'||value=='Q'||value=='W'||value=='E'||value=='R'||value=='T'||value=='Y'||value=='U'||value=='I'||value=='O'||value=='P'||value=='A'||value=='S'||value=='D'||value=='F'||value=='G'||value=='H'||value=='J'||value=='K'||value=='L'||value=='Z'||value=='X'||value=='C'||value=='V'||value=='B'||value=='N'||value=='M')	
@@ -41,7 +46,7 @@ char convert(char* arr , int start){
 			output='s';
 	
 		else if(value=='.')
-			output='d';	
+			output='D';	
 
 		else if (value==' '||value=='\n')
 			output='b';
@@ -101,13 +106,13 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 	bool first = true;
 	/* level*/ 
 	while(tmp!=NULL){
-			char converted = convert(arr,left+count);
+			char converted = convert(arr,left+count,false);
 
 				while(tmp!=NULL){
 				if(tmp->alpha==converted){
 					if(first){
 						if(converted =='z'){
-							converted = convert(arr,left+count+1);
+							converted = convert(arr,left+count+1,false);
 							//char findingdot = convert(arr,left+count+2);
 							/*this should be outside or not ..? of first think more
 							if(converted == 'd')
@@ -119,7 +124,7 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 							}
 
 						else if(converted =='s'){
-							converted = convert(arr,left+count+1);
+							converted = convert(arr,left+count+1,false);
 							/* this should be outside or not .. ? of first think more
 							char findingdot = convert(arr,left+count+2);
 								if(findingdot == 'd')
@@ -164,13 +169,14 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 
 bool isString(struct lexeme* lex, char* arr, int right, int left){
 
+
 	struct tokenTree *tmp = strHead;
 	bool tmp_ret = false;
 	int count =0;
 	lex->ret=false;
 	/* level*/ 
 	while(tmp!=NULL){
-			char converted = convert(arr,left+count);
+			char converted = convert(arr,left+count,true);
 
 				while(tmp!=NULL){
 				if(tmp->alpha==converted)
@@ -246,6 +252,7 @@ bool isBoolean(struct lexeme* lex, char* arr, int right, int left){
 
 bool isKeyword(struct lexeme* lex, char* arr, int right, int left){
 
+
 	struct tokenTree *tmp = keyHead;
 	bool tmp_ret = false;
 	int count =0;
@@ -293,7 +300,7 @@ bool isWhiteSpace(struct lexeme* lex, char* arr, int right, int left){
 	lex->ret=false;
 	/* level*/ 
 	while(1){
-			char converted = convert(arr,left+count);
+			char converted = convert(arr,left+count,false);
 
 				if('b'==converted){
 						/* Store things for lex */

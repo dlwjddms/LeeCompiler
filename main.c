@@ -82,15 +82,17 @@ struct symbolTable*  lexicalAnaylzer(char* arr){
 		newNode-> prev = NULL;
 		newNode-> name = lex->lex;
 
-		printf("55: %s \n",newNode->name);
 		char*tmp =(char*)malloc(sizeof(char)*(lex->len)) ;
-		for(int i=0; i<lex->len ;i++){
-			//strcat(tmp,&arr[i]);
-			tmp[i]=arr[left+i];
-		}
+
+			for(int i=0; i<lex->len ;i++){
+				//strcat(tmp,&arr[i]);
+				tmp[i]=arr[left+i];
+			}
+			newNode-> value= tmp;
+		
+
 		printf("\n 66: %s \n",tmp);
 		printf("count: %d left: %d, right:%d \n\n",lex->len,left,right);
-		newNode-> value= tmp;
 
 		if(firstInsert){
 			head = newNode;
@@ -125,7 +127,6 @@ int main(){
 
 	struct symbolTable *head =(struct symbolTable*)malloc(sizeof(struct symbolTable));
 
-	struct symbolTable *tail=(struct symbolTable*)malloc(sizeof(struct symbolTable));
 
 
     int size;
@@ -173,10 +174,12 @@ int main(){
 	struct symbolTable *tmp = head;
 	if(tmp !=NULL){
 		for( ;tmp != NULL ; tmp = tmp->next){
+			if(tmp->name != "WS"){
 			fputs( tmp->name, w_fp);   // 파일에 문자열 저장
 			fputs( " : ", w_fp);   // 파일에 문자열 저장
 			fputs( tmp->value, w_fp);   // 파일에 문자열 저장
 			fputs( "\n", w_fp);   // 파일에 문자열 저장
+			}
 		}
 
 		

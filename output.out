@@ -1,22 +1,9 @@
 typeVar : int
-WS :  
 INT : -1231111888889999999999666666666666666666
-WS :  
 INT : 11111111111
-WS : 
-
 typeVar : bool
-WS : 
-
-
-
 BOOL : TRUE
-WS :  
 BOOL : true
-WS :  
-
 KeyWord : if
 KeyWord : while
 KeyWord : for
-WS : 
-
