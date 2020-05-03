@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS    // fopen 보안 경고로 인한 컴파일 에러 방지
 #include<stdio.h>
 #include<string.h>
+#include<assert.h>
 #include<stdbool.h>
 #include<stdlib.h>
 #include "lexicalAnalyzer.h"
@@ -126,16 +127,20 @@ struct symbolTable*  lexicalAnaylzer(char* arr){
 }
 
 
-int main(){
+int main(int argc, char* argv[]){
 
 	struct symbolTable *head =(struct symbolTable*)malloc(sizeof(struct symbolTable));
 
 
-
     int size;
     int count=1;
+	if(argv[1] != NULL){
+		printf("file is not valid");
+		assert(argv[1] !=NULL);
 
-    FILE *r_fp = fopen("hello.txt", "r");    // hello.txt 파일을 읽기 모드(r)로 열기.
+	}
+
+    FILE *r_fp = fopen(argv[1], "r");    // hello.txt 파일을 읽기 모드(r)로 열기.
                                            // 파일 포인터를 반환
 
     fseek(r_fp, 0, SEEK_END);    // 파일 포인터를 파일의 끝으로 이동시킴
@@ -167,9 +172,14 @@ int main(){
 
     free(buffer);   // 동적 메모리 해제
 
-
-
-	FILE *w_fp = fopen("output.out", "w+"); 
+	/* Make output .out file which has same name with input file */
+	char*nameTmp = strtok(argv[1],".");
+	printf("%s\n",nameTmp);
+	char *fileName =malloc(sizeof(char)*(strlen(nameTmp)+4));
+	strcpy(fileName, nameTmp);
+	strcat(fileName,".out");
+	FILE *w_fp = fopen(fileName, "w+"); 
+	//FILE *w_fp = fopen("output.out", "w+"); 
       // hello.txt 파일을 쓰기 모드(w)로 열기.
 
 
@@ -188,6 +198,7 @@ int main(){
 		
 	}
     fclose(w_fp); 
+	free(nameTmp);
 	//symbolTables free is need... right..?
 
 		return 0;

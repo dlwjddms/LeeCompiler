@@ -1,5 +1,5 @@
-app.out: main.o lexicalAnalyzer.o initTree.o
-	gcc -o app.out main.o lexicalAnalyzer.o initTree.o
+lexical_analyzer: main.o lexicalAnalyzer.o initTree.o
+	gcc -o lexical_analyzer main.o lexicalAnalyzer.o initTree.o
 	 
 main.o: lexicalAnalyzer.h initTree.h main.c
 	gcc -c -o main.o main.c
