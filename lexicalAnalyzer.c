@@ -61,6 +61,10 @@ char convert(char* arr , int start, bool Str){
 	return output;
 }
 
+bool isFloat(struct lexeme * lex, char* arr, int right, int left){
+
+}
+
 bool isVariable(struct lexeme * lex, char* arr, int right, int left){
 
 	//char* converted = convert(arr,left);
@@ -108,9 +112,17 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 	int count =0;
 	lex->ret=false;
 	bool first = true;
+	bool isF =false;
 	/* level*/ 
 	while(tmp!=NULL){
 			char converted = convert(arr,left+count,false);
+
+				if(converted =='D'){
+
+						isF = isFloat( lex, arr, right,left);			
+						goto iFloat;
+	//					break;
+				}
 
 				while(tmp!=NULL){
 				if(tmp->alpha==converted){
@@ -118,24 +130,32 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 						if(converted =='z'){
 							converted = convert(arr,left+count+1,false);
 							//char findingdot = convert(arr,left+count+2);
-							/*this should be outside or not ..? of first think more
-							if(converted == 'd')
-								isFloat();
-							else	
-							*/
-								assert(converted !='z'&&converted!='n');
+							//this should be outside or not ..? of first think more
 
+							if(converted == 'D'){
+								isF = isFloat( lex, arr, right,left);
+								goto iFloat;
+								//break;->return
+								}
+							else{	
+								printf("zero doesn't come first in noninteger\n");
+								assert(converted !='z'&&converted!='n');
+								}
 							}
 
 						else if(converted =='s'){
 							converted = convert(arr,left+count+1,false);
-							/* this should be outside or not .. ? of first think more
-							char findingdot = convert(arr,left+count+2);
-								if(findingdot == 'd')
-									isFloat();
-							*/
-							assert(converted !='z');
-
+						//	 this should be outside or not .. ? of first think more
+							char findingdot = convert(arr,left+count+2,false);
+								if(findingdot == 'D'){
+										isF = isFloat( lex, arr, right,left);
+										goto iFloat;
+									//	break;->return
+								}
+								else{
+									printf("there is no zero with - \n");
+									assert(converted !='z');
+								}
 							}
 
 						else
@@ -169,6 +189,15 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 
 	else
 		return false;
+iFloat:
+		if(lex->ret){
+		lex->lex = "FOAT";
+		return true;
+		}
+	else
+		return false;
+
+
 }
 
 bool isString(struct lexeme* lex, char* arr, int right, int left){

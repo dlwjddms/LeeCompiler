@@ -18,9 +18,10 @@ struct tokenTree* keyHead ;
 
 void initTree();
 void freeTree();
-//void initKeyword(); 
+void initKeyword(); 
 void initBoolean();
 void initString();
 void initInteger();
+void initFloat();
 void initVarTree();
 	

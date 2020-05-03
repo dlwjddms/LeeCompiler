@@ -58,11 +58,6 @@ struct symbolTable*  lexicalAnaylzer(char* arr){
 		if(ret)
 			goto insert;
 
-/*
-		ret = isFloat(lex,arr,right,left);
-		if(ret)
-			goto insert;
-*/
 		ret = isInteger(lex,arr,right,left);
 		if(ret)
 			goto insert;
@@ -89,8 +84,6 @@ struct symbolTable*  lexicalAnaylzer(char* arr){
 					tmp[j]=arr[left+i];
 					j++;
 				}
-		//		else
-					//tmp[i]=' ';
 			}
 			newNode-> value= tmp;
 		
@@ -100,14 +93,12 @@ struct symbolTable*  lexicalAnaylzer(char* arr){
 
 		if(firstInsert){
 			head = newNode;
-			//tail = newNode;
 
 			firstInsert=false;
 		}
 		else{
 			oldNode-> next = newNode;
 			newNode -> prev = oldNode;
-			//tail = newNode;
 
 		}
 		oldNode = newNode;
@@ -116,12 +107,7 @@ struct symbolTable*  lexicalAnaylzer(char* arr){
 	}
 
 //	freeTree();
-/*
-	struct symbolTable *tail=(struct symbolTable*)malloc(sizeof(struct symbolTable));
-	tail ->value = "end";
-	oldNode ->next =tail;
-	tail ->prev = oldNode;
-*/
+
 	return  head;
 
 }
@@ -140,18 +126,15 @@ int main(int argc, char* argv[]){
 
 	}
 
-    FILE *r_fp = fopen(argv[1], "r");    // hello.txt 파일을 읽기 모드(r)로 열기.
-                                           // 파일 포인터를 반환
+    FILE *r_fp = fopen(argv[1], "r");   
+	fseek(r_fp, 0, SEEK_END);  
+	size = ftell(r_fp);
+    fseek(r_fp, 0, SEEK_SET);                
 
-    fseek(r_fp, 0, SEEK_END);    // 파일 포인터를 파일의 끝으로 이동시킴
-    size = ftell(r_fp);          // 파일 포인터의 현재 위치를 얻음
-
-	char *lineBuf;
-    lineBuf = malloc(size + 1);    // 파일 크기 + 1바이트(문자열 마지막의 NULL)만큼 동적 메모리 할당
-    memset(lineBuf, 0, size + 1);  // 파일 크기 + 1바이트만큼 메모리를 0으로 초기화
-    fseek(r_fp, 0, SEEK_SET);                // 파일 포인터를 파일의 처음으로 이동시킴
-   // count = fread(buffer, size, 1, r_fp);    // hello.txt에서 파일 크기만큼 값을 읽음
+	char *lineBuf= malloc(size + 1);    
+    memset(lineBuf, 0, size + 1); 
 	char*buffer =malloc(size+1);
+
 	while(fgets(lineBuf,size,r_fp)!=NULL){
 		count++;
 		char*Tmp ;
@@ -164,26 +147,22 @@ int main(int argc, char* argv[]){
 	}
 
     free(lineBuf);   // 동적 메모리 해제
-	printf("%s\n",buffer);
+
 	head = lexicalAnaylzer(buffer);
 
-
-	 fclose(r_fp);     // 파일 포인터 닫기
-
+	fclose(r_fp);     // 파일 포인터 닫기
     free(buffer);   // 동적 메모리 해제
+
+
 
 	/* Make output .out file which has same name with input file */
 	char*nameTmp = strtok(argv[1],".");
-	printf("%s\n",nameTmp);
 	char *fileName =malloc(sizeof(char)*(strlen(nameTmp)+4));
 	strcpy(fileName, nameTmp);
 	strcat(fileName,".out");
 	FILE *w_fp = fopen(fileName, "w+"); 
-	//FILE *w_fp = fopen("output.out", "w+"); 
-      // hello.txt 파일을 쓰기 모드(w)로 열기.
 
 
-	//	some modify is needed
 	struct symbolTable *tmp = head;
 	if(tmp !=NULL){
 		for( ;tmp != NULL ; tmp = tmp->next){
@@ -198,7 +177,6 @@ int main(int argc, char* argv[]){
 		
 	}
     fclose(w_fp); 
-	free(nameTmp);
 	//symbolTables free is need... right..?
 
 		return 0;
