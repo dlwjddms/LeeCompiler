@@ -22,7 +22,7 @@ struct lexeme {
 	bool ret;
 };
 
-struct symbolTable*  lexicalAnaylzer(char* arr){
+struct symbolTable*  lexicalAnaylze(char* arr){
 
 	
 	struct symbolTable *head =(struct symbolTable*)malloc(sizeof(struct symbolTable));
@@ -148,7 +148,7 @@ int main(int argc, char* argv[]){
 
     free(lineBuf);   // 동적 메모리 해제
 
-	head = lexicalAnaylzer(buffer);
+	head = lexicalAnaylze(buffer);
 
 	fclose(r_fp);     // 파일 포인터 닫기
     free(buffer);   // 동적 메모리 해제
@@ -166,12 +166,12 @@ int main(int argc, char* argv[]){
 	struct symbolTable *tmp = head;
 	if(tmp !=NULL){
 		for( ;tmp != NULL ; tmp = tmp->next){
-			if(strcmp(tmp->name, "WS")){
+		//	if(strcmp(tmp->name, "WS")){
 			fputs( tmp->name, w_fp);   // 파일에 문자열 저장
 			fputs( ":", w_fp);   // 파일에 문자열 저장
 			fputs( tmp->value, w_fp);   // 파일에 문자열 저장
 			fputs( "\n", w_fp);   // 파일에 문자열 저장
-			}
+		//	}
 		}
 
 		
