@@ -48,7 +48,11 @@ char convert(char* arr , int start, bool Str){
 		else if(value=='.')
 			output='D';	
 
-		else if (value==' '||value=='\n')
+		else if(value=='"')
+			output='"';	
+
+
+		else if (value==' '||value=='\n'||value =='\t')
 			output='b';
 		else
 			output='0';
@@ -179,12 +183,14 @@ bool isString(struct lexeme* lex, char* arr, int right, int left){
 			char converted = convert(arr,left+count,true);
 
 				while(tmp!=NULL){
-				if(tmp->alpha==converted)
+				if(tmp->alpha==converted){
 						break;
+					}
 				else
 					tmp=tmp->sibState;
 			}
 			count ++;
+
 			/* There is no state for this array */
 			if(tmp==NULL){
 				 break;
@@ -205,6 +211,7 @@ bool isString(struct lexeme* lex, char* arr, int right, int left){
 
 	else
 		return false;
+
 }
 
 

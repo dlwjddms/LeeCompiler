@@ -323,9 +323,9 @@ void initString(){
     tLevel4 -> alpha = '"';
 	tLevel4 -> ret = true;
 	
-	tLevel1 ->childState = fLevel1 ->childState;		
-	tLevel2 ->childState = fLevel1 ->childState;
-	tLevel3 ->childState = fLevel1 ->childState;
+	tLevel1 ->childState = sLevel1 ->childState;		
+	tLevel2 ->childState = sLevel1 ->childState;
+	tLevel3 ->childState = sLevel1 ->childState;
 	
 
 	return ;
