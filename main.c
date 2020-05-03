@@ -83,10 +83,13 @@ struct symbolTable*  lexicalAnaylzer(char* arr){
 		newNode-> name = lex->lex;
 
 		char*tmp =(char*)malloc(sizeof(char)*(lex->len)) ;
-
-			for(int i=0; i<lex->len ;i++){
-				//strcat(tmp,&arr[i]);
-				tmp[i]=arr[left+i];
+			for(int j=0,i=0; i<lex->len ;i++){
+				if(arr[left+i] != '"'){
+					tmp[j]=arr[left+i];
+					j++;
+				}
+		//		else
+					//tmp[i]=' ';
 			}
 			newNode-> value= tmp;
 		
@@ -176,7 +179,7 @@ int main(){
 		for( ;tmp != NULL ; tmp = tmp->next){
 			if(tmp->name != "WS"){
 			fputs( tmp->name, w_fp);   // 파일에 문자열 저장
-			fputs( " : ", w_fp);   // 파일에 문자열 저장
+			fputs( ":", w_fp);   // 파일에 문자열 저장
 			fputs( tmp->value, w_fp);   // 파일에 문자열 저장
 			fputs( "\n", w_fp);   // 파일에 문자열 저장
 			}
