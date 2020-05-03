@@ -153,7 +153,8 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 									//	break;->return
 								}
 								else{
-									printf("there is no zero with - \n");
+									if(converted =='z')
+										printf("there is no zero with - \n");
 									assert(converted !='z');
 								}
 							}

@@ -88,8 +88,8 @@ struct symbolTable*  lexicalAnaylzer(char* arr){
 			newNode-> value= tmp;
 		
 
-		printf("\n 66: %s \n",tmp);
-		printf("count: %d left: %d, right:%d \n\n",lex->len,left,right);
+	//	printf("\n 66: %s \n",tmp);
+	//	printf("count: %d left: %d, right:%d \n\n",lex->len,left,right);
 
 		if(firstInsert){
 			head = newNode;
@@ -120,7 +120,7 @@ int main(int argc, char* argv[]){
 
     int size;
     int count=1;
-	if(argv[1] != NULL){
+	if(argv[1] == NULL){
 		printf("file is not valid");
 		assert(argv[1] !=NULL);
 
@@ -166,7 +166,7 @@ int main(int argc, char* argv[]){
 	struct symbolTable *tmp = head;
 	if(tmp !=NULL){
 		for( ;tmp != NULL ; tmp = tmp->next){
-			if(tmp->name != "WS"){
+			if(strcmp(tmp->name, "WS")){
 			fputs( tmp->name, w_fp);   // 파일에 문자열 저장
 			fputs( ":", w_fp);   // 파일에 문자열 저장
 			fputs( tmp->value, w_fp);   // 파일에 문자열 저장
