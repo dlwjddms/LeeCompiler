@@ -28,6 +28,286 @@ void insertToNextNode(struct tokenTree * fNode, struct tokenTree * sNode){
 }
 
 
+//Sangjin
+
+void initIdentifier(){
+	/* Start state for Identifier tree */
+
+	/* first level */
+	struct tokenTree *fLevel1 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	idHead  = fLevel1;
+    	fLevel1 -> alpha = 'l';
+	fLevel1 -> ret= true;
+	fLevel1 -> childState = NULL;
+	fLevel1 -> sibState = NULL;
+
+	struct tokenTree *fLevel2 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	fLevel2 -> alpha = 'u';
+	fLevel2 -> ret = true;
+	fLevel2 -> childState = NULL;
+	fLevel2 -> sibState = NULL;
+
+	/* second level */
+	struct tokenTree *sLevel1 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	sLevel1 -> alpha = 'l';
+	sLevel1 -> ret = true;
+	sLevel1 -> childState = NULL;
+	sLevel1 -> sibState = NULL;
+
+	struct tokenTree *sLevel2 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	sLevel2 -> alpha = 'd';
+	sLevel2 -> ret = true;
+	sLevel2 -> childState = NULL;
+	sLevel2 -> sibState = NULL;
+
+	struct tokenTree *sLevel3 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	sLevel3 -> alpha = 'd';
+	sLevel3 -> ret = true;
+	sLevel3 -> childState = NULL;
+	sLevel3 -> sibState = NULL;
+
+	/* link state transitions */
+	fLevel1 -> childState = sLevel1;
+	fLevel2 -> childState = sLevel1;
+	sLevel1 -> childState = sLevel1;
+	sLevel2 -> childState = sLevel1;
+	sLevel3 -> childState = sLevel1;
+
+	fLevel1 -> sibState = fLevel2;
+	sLevel1 -> sibState = sLevel2;
+	sLevel2 -> sibState = sLevel3;
+
+}
+
+
+void initBitwiseop(){
+	/* Start state for Bitwise operator tree */
+
+	/* first level */
+	struct tokenTree *fLevel1 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	btHead  = fLevel1;
+    	fLevel1 -> alpha = 'L';
+	fLevel1 -> ret= false;
+	fLevel1 -> childState = NULL;
+	fLevel1 -> sibState = NULL;
+
+	struct tokenTree *fLevel2 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	fLevel2 -> alpha = 'G';
+	fLevel2 -> ret = false;
+	fLevel2 -> childState = NULL;
+	fLevel2 -> sibState = NULL;
+
+	struct tokenTree *fLevel3 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	fLevel3 -> alpha = 'a';
+	fLevel3 -> ret = true;
+	fLevel3 -> childState = NULL;
+	fLevel3 -> sibState = NULL;
+
+	struct tokenTree *fLevel4 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	fLevel4 -> alpha = 'o';
+	fLevel4 -> ret = true;
+	fLevel4 -> childState = NULL;
+	fLevel4 -> sibState = NULL;
+
+	/* second level */
+	struct tokenTree *sLevel1 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	sLevel1 -> alpha = 'L';
+	sLevel1 -> ret = true;
+	sLevel1 -> childState = NULL;
+	sLevel1 -> sibState = NULL;
+
+	struct tokenTree *sLevel2 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	sLevel2 -> alpha = 'G';
+	sLevel2 -> ret = true;
+	sLevel2 -> childState = NULL;
+	sLevel2 -> sibState = NULL;
+
+	/* link state transitions */
+	flevel1 -> childState = sLevel1;
+	flevel2 -> childState = sLevel2;
+
+	fLevel1 -> sibState = fLevel2;
+	fLevel2 -> sibState = fLevel3;
+	fLevel3 -> sibState = fLevel4;
+}
+
+void initComparisonop(){
+	/* Start state for Arithmetic operator tree */
+
+	/* first level */
+	struct tokenTree *fLevel1 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	compHead  = fLevel1;
+    	fLevel1 -> alpha = 'L';
+	fLevel1 -> ret= true;
+	fLevel1 -> childState = NULL;
+	fLevel1 -> sibState = NULL;
+
+	struct tokenTree *fLevel2 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	fLevel2 -> alpha = 'G';
+	fLevel2 -> ret = true;
+	fLevel2 -> childState = NULL;
+	fLevel2 -> sibState = NULL;
+
+	struct tokenTree *fLevel3 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	fLevel2 -> alpha = 'E';
+	fLevel2 -> ret = false;
+	fLevel2 -> childState = NULL;
+	fLevel2 -> sibState = NULL;
+
+	struct tokenTree *fLevel4 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	fLevel2 -> alpha = 'N';
+	fLevel2 -> ret = false;
+	fLevel2 -> childState = NULL;
+	fLevel2 -> sibState = NULL;
+
+	/* second level */
+	struct tokenTree *sLevel1 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	sLevel1 -> alpha = 'E';
+	sLevel1 -> ret = true;
+	sLevel1 -> childState = NULL;
+	sLevel1 -> sibState = NULL;
+
+	struct tokenTree *sLevel2 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	sLevel1 -> alpha = 'E';
+	sLevel1 -> ret = true;
+	sLevel1 -> childState = NULL;
+	sLevel1 -> sibState = NULL;
+
+	struct tokenTree *sLevel3 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	sLevel1 -> alpha = 'E';
+	sLevel1 -> ret = true;
+	sLevel1 -> childState = NULL;
+	sLevel1 -> sibState = NULL;
+
+	struct tokenTree *sLevel4 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	sLevel1 -> alpha = 'E';
+	sLevel1 -> ret = true;
+	sLevel1 -> childState = NULL;
+	sLevel1 -> sibState = NULL;
+
+	/* link state transitions */
+	flevel1 -> childState = sLevel1;
+	flevel2 -> childState = sLevel2;
+	flevel3 -> childState = sLevel3;
+	flevel4 -> childState = sLevel4;
+}
+
+void initAssignop(){
+	/* Start state for Assignment operator tree */
+
+	/* first level */
+	struct tokenTree *fLevel1 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	assiHead  = fLevel1;
+    	fLevel1 -> alpha = 'E';
+	fLevel1 -> ret= true;
+	fLevel1 -> childState = NULL;
+	fLevel1 -> sibState = NULL;
+}
+
+void initArithop(){
+	/* Start state for Arithmetic operator tree */
+
+	/* first level */
+	struct tokenTree *fLevel1 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	aritHead  = fLevel1;
+    	fLevel1 -> alpha = 'P';
+	fLevel1 -> ret= true;
+	fLevel1 -> childState = NULL;
+	fLevel1 -> sibState = NULL;
+
+	struct tokenTree *fLevel2 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	fLevel2 -> alpha = 'S';
+	fLevel2 -> ret = true;
+	fLevel2 -> childState = NULL;
+	fLevel2 -> sibState = NULL;
+
+	struct tokenTree *fLevel3 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	fLevel3 -> alpha = 'M';
+	fLevel3 -> ret = true;
+	fLevel3 -> childState = NULL;
+	fLevel3 -> sibState = NULL;
+
+	struct tokenTree *fLevel4 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	fLevel3 -> alpha = 'V';
+	fLevel3 -> ret = true;
+	fLevel3 -> childState = NULL;
+	fLevel3 -> sibState = NULL;
+
+	/* link state transitions */
+
+	fLevel1 -> sibState = fLevel2;
+	fLevel2 -> sibState = fLevel3;
+	fLevel3 -> sibState = fLevel4;
+}
+
+
+void initTermin(){
+	/* Start state for Termination tree */
+
+	/* first level */
+	struct tokenTree *fLevel1 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	terHead  = fLevel1;
+    	fLevel1 -> alpha = 'C';
+	fLevel1 -> ret= true;
+	fLevel1 -> childState = NULL;
+	fLevel1 -> sibState = NULL;
+}
+
+
+void initBrace(){
+	/* Start state for Brace tree */
+
+	/* first level */
+	struct tokenTree *fLevel1 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	brcHead  = fLevel1;
+    	fLevel1 -> alpha = 'F';
+	fLevel1 -> ret= true;
+	fLevel1 -> childState = NULL;
+	fLevel1 -> sibState = NULL;
+
+	struct tokenTree *fLevel2 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	fLevel2 -> alpha = 'T';
+	fLevel2 -> ret = true;
+	fLevel2 -> childState = NULL;
+	fLevel2 -> sibState = NULL;
+
+	/* link state transitions */
+	fLevel1 -> sibState = fLevel2;
+}
+
+void initParentheses(){
+	/* Start state for Parentheses tree */
+
+	/* first level */
+	struct tokenTree *fLevel1 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	parHead  = fLevel1;
+    	fLevel1 -> alpha = 'f';
+	fLevel1 -> ret= true;
+	fLevel1 -> childState = NULL;
+	fLevel1 -> sibState = NULL;
+
+	struct tokenTree *fLevel2 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	fLevel2 -> alpha = 't';
+	fLevel2 -> ret = true;
+	fLevel2 -> childState = NULL;
+	fLevel2 -> sibState = NULL;
+
+	/* link state transitions */
+	fLevel1 -> sibState = fLevel2;
+}
+
+void initSeperator(){
+	/* Start state for Seperator tree */
+
+	/* first level */
+	struct tokenTree *fLevel1 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	sepHead  = fLevel1;
+    	fLevel1 -> alpha = 'p';
+	fLevel1 -> ret= true;
+	fLevel1 -> childState = NULL;
+	fLevel1 -> sibState = NULL;
+}
+
 void initFloat(){
 
 	/* For level 1 */
@@ -602,7 +882,15 @@ void initTree(){
 	initBoolean();
 	initFloat();
 	initKeyword();
-
+	initIdentifier();
+	initBitwiseop();
+	initComparisonop();
+	initAssignop();
+	initArithop();
+	initTermin();
+	initBrace();
+	initParentheses();
+	initSeperator();
 	return ;
 }
 
@@ -661,8 +949,16 @@ void freeTree(){
 		}
 
 	//	free(fHead) ;
-//	free(keyHead) ;
-
+	//	free(keyHead) ;
+//free(idHead) ;
+//free(btHead) ;
+//free(compHead) ;
+//free(assiHead) ;
+//free(aritHead) ;
+//free(terHead) ;
+//free(brcHead) ;
+//free(parHead) ;
+//free(sepHead) ;
 	return ;
 }
 
