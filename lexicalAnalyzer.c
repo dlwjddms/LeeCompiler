@@ -22,7 +22,7 @@ struct lexeme {
  blank -> \t
 
 */
-char convert(char* arr , int start, bool Str){
+char convert(char* arr , int start, bool digit){
 	
 	//char*input = arr;
 	char output;
@@ -30,13 +30,13 @@ char convert(char* arr , int start, bool Str){
 	//while(arr[i]!=NULL){
 	char value = arr[i];
 
-		 if(Str && (value =='0'||value=='1'||value=='2'||value=='3'||value=='4'||value=='5'||value=='6'||value=='7'||value=='8'||value=='9'))
+		 if(digit && (value =='0'||value=='1'||value=='2'||value=='3'||value=='4'||value=='5'||value=='6'||value=='7'||value=='8'||value=='9'))
 			output='d';
 
-		else if(!Str && value =='0')//zero
+		else if(!digit && value =='0')//zero
 			output='z';
 		
-		else if(!Str && (value=='1'||value=='2'||value=='3'||value=='4'||value=='5'||value=='6'||value=='7'||value=='8'||value=='9'))
+		else if(!digit && (value=='1'||value=='2'||value=='3'||value=='4'||value=='5'||value=='6'||value=='7'||value=='8'||value=='9'))
 			output='n';
 
 		else if(value=='q'||value=='w'||value=='e'||value=='r'||value=='t'||value=='y'||value=='u'||value=='i'||value=='o'||value=='p'||value=='a'||value=='s'||value=='d'||value=='f'||value=='g'||value=='h'||value=='j'||value=='k'||value=='l'||value=='z'||value=='x'||value=='c'||value=='v'||value=='b'||value=='n'||value=='m'||value=='Q'||value=='W'||value=='E'||value=='R'||value=='T'||value=='Y'||value=='U'||value=='I'||value=='O'||value=='P'||value=='A'||value=='S'||value=='D'||value=='F'||value=='G'||value=='H'||value=='J'||value=='K'||value=='L'||value=='Z'||value=='X'||value=='C'||value=='V'||value=='B'||value=='N'||value=='M')	
@@ -51,9 +51,59 @@ char convert(char* arr , int start, bool Str){
 		else if(value=='"')
 			output='"';	
 
-
 		else if (value==' '||value=='\n'||value =='\t')
 			output='b';
+		
+		else if (value=='+')
+			output='P'	//Plus symbol
+
+		else if (value=='-')
+			output='S'	//Subtract symbol
+
+		else if (value=='*')
+			output='M'	//Multiplication symbol
+
+		else if (value=='/')
+			output='V'	//diVide symbol
+
+		else if (value=='_')
+			output='u'	//underscore symbol
+
+		else if(value=='<')
+			output='L';	//Less symbol
+
+		else if(value=='>')
+			output='G';	//Greater symbol
+
+		else if(value=='=')
+			output='E';	//EQUAL symbol
+
+		else if(value=='!')
+			output='N';	//NOT symbol
+
+		else if(value=='&')
+			output='A';	//AND symbol
+
+		else if(value=='|')
+			output='O';	//OR symbol (capital alphabet O)
+
+		else if(value==';')
+			output='C';	//semiColon symbol
+
+		else if(value=='{')
+			output='F';	//left brace symbol
+
+		else if(value=='}')
+			output='T';	//right brace symbol
+
+		else if(value=='(')
+			output='f';	//left parentheses symbol
+
+		else if(value==')')
+			output='t';	//right parentheses symbol
+
+		else if(value==')')
+			output='p';	//seperator symbol
 		else
 			output='0';
 		
