@@ -162,16 +162,15 @@ int main(int argc, char* argv[]){
 	strcat(fileName,".out");
 	FILE *w_fp = fopen(fileName, "w+"); 
 
-
 	struct symbolTable *tmp = head;
 	if(tmp !=NULL){
 		for( ;tmp != NULL ; tmp = tmp->next){
-		//	if(strcmp(tmp->name, "WS")){
+			if(strcmp(tmp->name, "WS")){
 			fputs( tmp->name, w_fp);   // 파일에 문자열 저장
 			fputs( ":", w_fp);   // 파일에 문자열 저장
 			fputs( tmp->value, w_fp);   // 파일에 문자열 저장
 			fputs( "\n", w_fp);   // 파일에 문자열 저장
-		//	}
+			}
 		}
 
 		

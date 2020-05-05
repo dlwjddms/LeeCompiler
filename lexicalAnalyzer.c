@@ -55,19 +55,19 @@ char convert(char* arr , int start, bool digit){
 			output='b';
 		
 		else if (value=='+')
-			output='P'	//Plus symbol
+			output='P';	//Plus symbol
 
 		else if (value=='-')
-			output='S'	//Subtract symbol
+			output='S';	//Subtract symbol
 
 		else if (value=='*')
-			output='M'	//Multiplication symbol
+			output='M';	//Multiplication symbol
 
 		else if (value=='/')
-			output='V'	//diVide symbol
+			output='V';	//diVide symbol
 
 		else if (value=='_')
-			output='u'	//underscore symbol
+			output='u';	//underscore symbol
 
 		else if(value=='<')
 			output='L';	//Less symbol

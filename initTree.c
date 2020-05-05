@@ -123,8 +123,8 @@ void initBitwiseop(){
 	sLevel2 -> sibState = NULL;
 
 	/* link state transitions */
-	flevel1 -> childState = sLevel1;
-	flevel2 -> childState = sLevel2;
+	fLevel1 -> childState = sLevel1;
+	fLevel2 -> childState = sLevel2;
 
 	fLevel1 -> sibState = fLevel2;
 	fLevel2 -> sibState = fLevel3;
@@ -186,10 +186,10 @@ void initComparisonop(){
 	sLevel1 -> sibState = NULL;
 
 	/* link state transitions */
-	flevel1 -> childState = sLevel1;
-	flevel2 -> childState = sLevel2;
-	flevel3 -> childState = sLevel3;
-	flevel4 -> childState = sLevel4;
+	fLevel1 -> childState = sLevel1;
+	fLevel2 -> childState = sLevel2;
+	fLevel3 -> childState = sLevel3;
+	fLevel4 -> childState = sLevel4;
 }
 
 void initAssignop(){
