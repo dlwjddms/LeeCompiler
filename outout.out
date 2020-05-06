@@ -26,9 +26,19 @@ INT:111111111112
 typeVar:bool
 STRING: ss 12gg
 STRING:djflskdlkdam
+BOOL:TRUE
+BOOL:true
+KeyWord:if
+KeyWord:while
+KeyWord:for
 typeVar:int
 INT:-12311118888899999999996666666666666666668
-INT:111111111112ú
+INT:111111111112
 typeVar:bool
 STRING: ss 12gg
-STRING:djfls
+STRING:djflskdlkdam
+BOOL:TRUE
+BOOL:true
+KeyWord:if
+KeyWord:while
+KeyWord:for

@@ -56,10 +56,10 @@ char convert(char* arr , int start, bool digit){
 		
 		else if (value=='+')
 			output='P';	//Plus symbol
-
+/*
 		else if (value=='-')
 			output='S';	//Subtract symbol
-
+*/
 		else if (value=='*')
 			output='M';	//Multiplication symbol
 
@@ -175,51 +175,52 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 				}
 
 				while(tmp!=NULL){
-				if(tmp->alpha==converted){
-					if(first){
-						if(converted =='z'){
-							converted = convert(arr,left+count+1,false);
-							//char findingdot = convert(arr,left+count+2);
-							//this should be outside or not ..? of first think more
+					if(tmp->alpha==converted){
+						if(first){
+							if(converted =='z'){
+								converted = convert(arr,left+count+1,false);
 
-							if(converted == 'D'){
-								isF = isFloat( lex, arr, right,left);
-								goto iFloat;
-								//break;->return
-								}
-							else{	
-								printf("zero doesn't come first in noninteger\n");
-								assert(converted !='z'&&converted!='n');
-								}
-							}
+								if(converted == 'D'){
+									isF = isFloat( lex, arr, right,left);
+									goto iFloat;
+									//break;->return
+									}
+								else if(converted=='z'||converted=='n'){
+										printf("ERROR !!! :in positive integer,\n multiple zero doesn't exist or zero doesn't come first in noninteger!!!\n\n");
+										assert(converted !='z'&&converted!='n');
+									}
 
-						else if(converted =='s'){
-							converted = convert(arr,left+count+1,false);
-						//	 this should be outside or not .. ? of first think more
-							char findingdot = convert(arr,left+count+2,false);
+								else
+									first =false;
+								}
+							
+							else if(converted =='s'){
+								converted = convert(arr,left+count+1,false);
+								//	 this should be outside or not .. ? of first think more
+								char findingdot = convert(arr,left+count+2,false);
 								if(findingdot == 'D'){
-										isF = isFloat( lex, arr, right,left);
-										goto iFloat;
+									isF = isFloat( lex, arr, right,left);
+									goto iFloat;
 									//	break;->return
 								}
 								else{
 									if(converted =='z')
-										printf("there is no zero with - \n");
+										printf("ERROR!!!! :there is no zero with '-' !!!\n\n");
 									assert(converted !='z');
 								}
 							}
 
-						else
+							else
+								first =false;
 							first =false;
-						first =false;
 						}
 
-					break;
+						break;
 					}
-				else
-					tmp=tmp->sibState;
-			}
-			count ++;
+					else
+						tmp=tmp->sibState;
+				}
+				count ++;
 			/* There is no state for this array */
 			if(tmp==NULL){
 				 break;
@@ -233,6 +234,7 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 			tmp = tmp->childState;
 			
 	}
+
 	if(lex->ret){
 		lex->lex = "INT";
 		return true;
@@ -242,7 +244,7 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 		return false;
 iFloat:
 		if(lex->ret){
-		lex->lex = "FOAT";
+		lex->lex = "FLOAT";
 		return true;
 		}
 	else
@@ -258,14 +260,34 @@ bool isString(struct lexeme* lex, char* arr, int right, int left){
 	bool tmp_ret = false;
 	int count =0;
 	lex->ret=false;
+
+	bool eHandler= false;
+	int numQ= 0;
 	/* level*/ 
 	while(tmp!=NULL){
 			char converted = convert(arr,left+count,true);
 
-				while(tmp!=NULL){
+			while(tmp!=NULL){
 				if(tmp->alpha==converted){
-						break;
+					if(numQ==1){// we are in String
+						if(converted!='"'&&converted!='d'&&converted!='l'&&converted!='b'){
+							printf("ERROR!!! String is consist of only by digit or english letter or blank !!! \n \n");
+							assert(eHandler);
+
+						}
 					}
+
+					if(arr[left+count]=='"'){
+						if((!eHandler)&&(arr[left]==arr[left+1])){ //for "" error handling
+							printf("ERROR!!! String must have at least one digit or english letter or blank !!! \n \n");
+							assert(eHandler);
+						}
+						eHandler =true;//" exists so, num of " has to be 2 if String is normal 
+						numQ++;
+					}
+
+					break;
+				}
 				else
 					tmp=tmp->sibState;
 			}
@@ -284,6 +306,13 @@ bool isString(struct lexeme* lex, char* arr, int right, int left){
 			tmp = tmp->childState;
 			
 	}
+
+	if(eHandler && numQ!=2){
+		// for num of " is odd
+		printf("ERROR!!!! The number of Double quotes are odd, so String doesn't stop!!! \n\n");
+		assert(numQ==2);
+	}
+
 	if(lex->ret){
 		lex->lex = "STRING";
 		return true;

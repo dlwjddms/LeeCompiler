@@ -21,6 +21,8 @@ struct lexeme {
 	char* lex;
 	bool ret;
 };
+/* variable for total assert*/
+bool success = true;
 
 struct symbolTable*  lexicalAnaylze(char* arr){
 
@@ -69,7 +71,8 @@ struct symbolTable*  lexicalAnaylze(char* arr){
 
 		/* when you are here there is no more valid token error is needed  */
 		free(lex);
-		break;
+		success = false;
+		break;	
 
 	insert : 
 		right = left+ lex->len;
@@ -156,11 +159,15 @@ int main(int argc, char* argv[]){
 
 
 	/* Make output .out file which has same name with input file */
+	/*hello.txt 는 되는디 ./hello.txt는 안된다느넥 함정*/
 	char*nameTmp = strtok(argv[1],".");
 	char *fileName =malloc(sizeof(char)*(strlen(nameTmp)+4));
 	strcpy(fileName, nameTmp);
 	strcat(fileName,".out");
-	FILE *w_fp = fopen(fileName, "w+"); 
+	FILE *w_fp = fopen(fileName, "a"); 
+
+	if(!w_fp)
+		return 0;
 
 	struct symbolTable *tmp = head;
 	if(tmp !=NULL){
@@ -176,6 +183,9 @@ int main(int argc, char* argv[]){
 		
 	}
     fclose(w_fp); 
+	if(!success)
+		printf("ERROR!!!! : some code has not matching token!!! \n\n");
+	assert(success);
 	//symbolTables free is need... right..?
 
 		return 0;
