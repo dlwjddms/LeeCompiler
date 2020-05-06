@@ -4,14 +4,6 @@
 #include<stdbool.h>
 #include "initTree.h"
 
-struct lexeme {
-
-	int len;
-	char* lex;
-	bool ret;
-	bool val;
-
-};
 /* this funtion is for isFloat, isInterger ,isString
    DON'T use for isVariable or isKeyword or isBool !!! 
 
@@ -56,10 +48,7 @@ char convert(char* arr , int start, bool digit){
 		
 		else if (value=='+')
 			output='P';	//Plus symbol
-/*
-		else if (value=='-')
-			output='S';	//Subtract symbol
-*/
+
 		else if (value=='*')
 			output='M';	//Multiplication symbol
 
@@ -177,24 +166,7 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 				while(tmp!=NULL){
 					if(tmp->alpha==converted){
 						if(first){
-							if(converted =='z'){
-								converted = convert(arr,left+count+1,false);
-
-								if(converted == 'D'){
-									isF = isFloat( lex, arr, right,left);
-									goto iFloat;
-									//break;->return
-									}
-								else if(converted=='z'||converted=='n'){
-										printf("ERROR !!! :in positive integer,\n multiple zero doesn't exist or zero doesn't come first in noninteger!!!\n\n");
-										assert(converted !='z'&&converted!='n');
-									}
-
-								else
-									first =false;
-								}
-							
-							else if(converted =='s'){
+							if(converted =='s'){
 								converted = convert(arr,left+count+1,false);
 								//	 this should be outside or not .. ? of first think more
 								char findingdot = convert(arr,left+count+2,false);
@@ -412,7 +384,7 @@ bool isWhiteSpace(struct lexeme* lex, char* arr, int right, int left){
 
 	struct tokenTree *tmp ;//= strHead;
 	bool tmp_ret = false;
-	int count =0;
+	int count = 0;
 	lex->ret=false;
 	/* level*/ 
 	while(1){
@@ -440,4 +412,12 @@ bool isWhiteSpace(struct lexeme* lex, char* arr, int right, int left){
 }
 
 
-
+bool isIdentifier(struct lexeme* lex, char* arr, int right, int left){
+	struct tokenTree *tmp = idHead;
+	bool tmp_ret = false;
+	int count = 0;
+	lex->ret = false;
+	
+	/* level1 */
+	while(1)
+}

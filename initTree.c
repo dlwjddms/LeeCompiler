@@ -13,23 +13,6 @@
 
 //struct tokenTree* getNewNode (){};
 
-
-/* Insert sNode sibling of fNode */
-/* but not used yet */
-void insertToNextNode(struct tokenTree * fNode, struct tokenTree * sNode){
-
-	struct tokenTree* tmp= fNode->sibState;
-	while(tmp){
-		tmp = tmp -> sibState;
-			// if we have sampe vale already assert
-			//----- right..???
-	}
-    tmp = sNode;	
-}
-
-
-//Sangjin
-
 void initIdentifier(){
 	/* Start state for Identifier tree */
 
@@ -497,9 +480,6 @@ void initKeyword(){
 	siLevel5 -> ret= true;
 	
 	return;
-
-
-
 
 } 
 

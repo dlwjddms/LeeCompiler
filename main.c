@@ -15,18 +15,10 @@ struct symbolTable{
 	struct symbolTable *next;
 };
 
-struct lexeme {
-
-	int len;
-	char* lex;
-	bool ret;
-};
 /* variable for total assert*/
 bool success = true;
 
-struct symbolTable*  lexicalAnaylze(char* arr){
-
-	
+struct symbolTable*  lexicalAnalyze(char* arr){
 	struct symbolTable *head =(struct symbolTable*)malloc(sizeof(struct symbolTable));
 	struct symbolTable *oldNode = head;
 	bool firstInsert = true;
@@ -78,7 +70,7 @@ struct symbolTable*  lexicalAnaylze(char* arr){
 		right = left+ lex->len;
 		struct symbolTable* newNode = (struct symbolTable*)malloc(sizeof(struct symbolTable));
 		newNode-> prev = NULL;
-		newNode-> prev = NULL;
+//		newNode-> prev = NULL;
 		newNode-> name = lex->lex;
 
 		char*tmp =(char*)malloc(sizeof(char)*(lex->len)) ;
@@ -151,7 +143,7 @@ int main(int argc, char* argv[]){
 
     free(lineBuf);   // 동적 메모리 해제
 
-	head = lexicalAnaylze(buffer);
+	head = lexicalAnalyze(buffer);
 
 	fclose(r_fp);     // 파일 포인터 닫기
     free(buffer);   // 동적 메모리 해제

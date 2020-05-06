@@ -9,6 +9,12 @@ struct tokenTree{
 		struct tokenTree *sibState;
 };
 
+struct lexeme {
+	int len;
+	char* lex;
+	bool ret;
+};
+
 struct tokenTree* varHead ;
 struct tokenTree* intHead ;
 struct tokenTree* strHead ;
@@ -34,6 +40,7 @@ void initString();
 void initInteger();
 void initFloat();
 void initVarTree();
+
 void initIdentifier();
 void initBitwiseop();
 void initComparisonop();
