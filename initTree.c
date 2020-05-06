@@ -18,8 +18,8 @@ void initIdentifier(){
 
 	/* first level */
 	struct tokenTree *fLevel1 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
-	idHead  = fLevel1;
-    	fLevel1 -> alpha = 'l';
+	idHead = fLevel1;
+    fLevel1 -> alpha = 'l';
 	fLevel1 -> ret= true;
 	fLevel1 -> childState = NULL;
 	fLevel1 -> sibState = NULL;
@@ -44,7 +44,7 @@ void initIdentifier(){
 	sLevel2 -> sibState = NULL;
 
 	struct tokenTree *sLevel3 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
-	sLevel3 -> alpha = 'd';
+	sLevel3 -> alpha = 'u';
 	sLevel3 -> ret = true;
 	sLevel3 -> childState = NULL;
 	sLevel3 -> sibState = NULL;
@@ -69,7 +69,7 @@ void initBitwiseop(){
 	/* first level */
 	struct tokenTree *fLevel1 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
 	btHead  = fLevel1;
-    	fLevel1 -> alpha = 'L';
+   	fLevel1 -> alpha = 'L';
 	fLevel1 -> ret= false;
 	fLevel1 -> childState = NULL;
 	fLevel1 -> sibState = NULL;
@@ -115,7 +115,7 @@ void initBitwiseop(){
 }
 
 void initComparisonop(){
-	/* Start state for Arithmetic operator tree */
+	/* Start state for Comparison operator tree */
 
 	/* first level */
 	struct tokenTree *fLevel1 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
@@ -199,7 +199,7 @@ void initArithop(){
 	fLevel1 -> sibState = NULL;
 
 	struct tokenTree *fLevel2 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
-	fLevel2 -> alpha = 'S';
+	fLevel2 -> alpha = 's';
 	fLevel2 -> ret = true;
 	fLevel2 -> childState = NULL;
 	fLevel2 -> sibState = NULL;

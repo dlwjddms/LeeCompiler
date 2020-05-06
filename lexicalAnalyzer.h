@@ -10,10 +10,10 @@ bool isKeyword(struct lexeme* lex, char* arr, int right, int left);
 bool isWhiteSpace(struct lexeme* lex, char* arr, int right, int left);
 //
 bool isIdentifier(struct lexeme* lex, char* arr, int right, int left);
-bool isBitwise(struct lexeme* lex, char* arr, int right, int left);
-bool isComparison(struct lexeme* lex, char* arr, int right, int left);
-bool isAssign(struct lexeme* lex, char* arr, int right, int left);
-bool isArithmetic(struct lexeme* lex, char* arr, int right, int left);
+bool isBitwiseop(struct lexeme* lex, char* arr, int right, int left);
+bool isComparisonop(struct lexeme* lex, char* arr, int right, int left);
+bool isAssignop(struct lexeme* lex, char* arr, int right, int left);
+bool isArithmeticop(struct lexeme* lex, char* arr, int right, int left);
 bool isTermin(struct lexeme* lex, char* arr, int right, int left);
 bool isBrace(struct lexeme* lex, char* arr, int right, int left);
 bool isParentheses(struct lexeme* lex, char* arr, int right, int left);

@@ -31,24 +31,28 @@ struct symbolTable*  lexicalAnalyze(char* arr){
 	int end = strlen(arr);
 	initTree();
 
+	/* priority */
+	// 1. Float
+	// 2. Signed integer
+	// 3. A
 	while(right<end/* until buffer got empty*/ ){
 		struct lexeme *lex = (struct lexeme*)malloc(sizeof(struct lexeme));
 
 		bool ret = false ;
-//	임시임;;;
+
 		ret = isWhiteSpace(lex,arr,right,left);
 		if(ret)
 			goto insert;
 
+		ret = isBoolean(lex,arr,right,left);
+		if(ret)
+			goto insert;
+		
 		ret = isVariable(lex,arr,right,left);
 		if(ret)
 			goto insert;
 
 		ret = isKeyword(lex,arr,right,left);
-		if(ret)
-			goto insert;
-
-		ret = isBoolean(lex,arr,right,left);
 		if(ret)
 			goto insert;
 
@@ -59,7 +63,42 @@ struct symbolTable*  lexicalAnalyze(char* arr){
 		ret = isString(lex,arr,right,left);
 		if(ret)
 			goto insert;
+			
+		ret = isIdentifier(lex,arr,right,left);
+		if(ret)
+			goto insert;
+			
+		ret = isArithmeticop(lex,arr,right,left);
+		if(ret)
+			goto insert;
 
+		ret = isBitwiseop(lex,arr,right,left);
+		if(ret)
+			goto insert;
+		
+		ret = isComparisonop(lex,arr,right,left);
+		if(ret)
+			goto insert;
+		
+		ret = isAssignop(lex,arr,right,left);
+		if(ret)
+			goto insert;
+
+		ret = isTermin(lex,arr,right,left);
+		if(ret)
+			goto insert;
+		
+		ret = isBrace(lex,arr,right,left);
+		if(ret)
+			goto insert;
+		
+		ret = isParentheses(lex,arr,right,left);
+		if(ret)
+			goto insert;
+
+		ret = isSeperator(lex,arr,right,left);
+		if(ret)
+			goto insert;
 
 		/* when you are here there is no more valid token error is needed  */
 		free(lex);
@@ -70,7 +109,6 @@ struct symbolTable*  lexicalAnalyze(char* arr){
 		right = left+ lex->len;
 		struct symbolTable* newNode = (struct symbolTable*)malloc(sizeof(struct symbolTable));
 		newNode-> prev = NULL;
-//		newNode-> prev = NULL;
 		newNode-> name = lex->lex;
 
 		char*tmp =(char*)malloc(sizeof(char)*(lex->len)) ;
@@ -175,6 +213,7 @@ int main(int argc, char* argv[]){
 		
 	}
     fclose(w_fp); 
+
 	if(!success)
 		printf("ERROR!!!! : some code has not matching token!!! \n\n");
 	assert(success);
