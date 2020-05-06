@@ -20,13 +20,14 @@ struct lexeme {
 	int len;
 	char* lex;
 	bool ret;
+	int line ;
 };
 /* variable for total assert*/
 bool success = true;
-
 struct symbolTable*  lexicalAnaylze(char* arr){
 
 	
+	int line =0;
 	struct symbolTable *head =(struct symbolTable*)malloc(sizeof(struct symbolTable));
 	struct symbolTable *oldNode = head;
 	bool firstInsert = true;
@@ -41,7 +42,7 @@ struct symbolTable*  lexicalAnaylze(char* arr){
 
 	while(right<end/* until buffer got empty*/ ){
 		struct lexeme *lex = (struct lexeme*)malloc(sizeof(struct lexeme));
-
+		lex ->line = line +1;
 		bool ret = false ;
 //	임시임;;;
 		ret = isWhiteSpace(lex,arr,right,left);
@@ -87,6 +88,9 @@ struct symbolTable*  lexicalAnaylze(char* arr){
 					tmp[j]=arr[left+i];
 					j++;
 				}
+				if(arr[left+i]=='\n')
+					line++;
+
 			}
 			newNode-> value= tmp;
 		

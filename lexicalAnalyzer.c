@@ -8,8 +8,10 @@ struct lexeme {
 
 	int len;
 	char* lex;
-	bool ret;
 	bool val;
+	//must erase this
+	bool ret;	
+	int line;
 
 };
 /* this funtion is for isFloat, isInterger ,isString
@@ -185,11 +187,6 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 									goto iFloat;
 									//break;->return
 									}
-								else if(converted=='z'||converted=='n'){
-										printf("ERROR !!! :in positive integer,\n multiple zero doesn't exist or zero doesn't come first in noninteger!!!\n\n");
-										assert(converted !='z'&&converted!='n');
-									}
-
 								else
 									first =false;
 								}
@@ -204,9 +201,16 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 									//	break;->return
 								}
 								else{
-									if(converted =='z')
-										printf("ERROR!!!! :there is no zero with '-' !!!\n\n");
+									if(converted =='z'){
+										printf("ERROR!!!! :there is no zero with '-' !!!\n");
+											printf("the error is on line %d on  this part : ",lex->line);
+										for(int i =0 ; i<=count ;i++){
+											printf("%c",arr[left+i]);
+										}
+											printf("\n\n");
+
 									assert(converted !='z');
+									}
 								}
 							}
 
@@ -271,7 +275,13 @@ bool isString(struct lexeme* lex, char* arr, int right, int left){
 				if(tmp->alpha==converted){
 					if(numQ==1){// we are in String
 						if(converted!='"'&&converted!='d'&&converted!='l'&&converted!='b'){
-							printf("ERROR!!! String is consist of only by digit or english letter or blank !!! \n \n");
+							printf("ERROR!!! String is consist of only by digit or english letter or blank !!! \n ");
+								printf("the error is on line %d on  this part : ",lex->line);
+										for(int i =0 ; i<=count ;i++){
+											printf("%c",arr[left+i]);
+										}
+											printf("\n\n");
+
 							assert(eHandler);
 
 						}
@@ -279,7 +289,13 @@ bool isString(struct lexeme* lex, char* arr, int right, int left){
 
 					if(arr[left+count]=='"'){
 						if((!eHandler)&&(arr[left]==arr[left+1])){ //for "" error handling
-							printf("ERROR!!! String must have at least one digit or english letter or blank !!! \n \n");
+							printf("ERROR!!! String must have at least one digit or english letter or blank !!! \n ");
+							printf("the error is on line %d on  this part : ",lex->line);
+										for(int i =0 ; i<=count ;i++){
+											printf("%c",arr[left+i]);
+										}
+											printf("\n\n");
+
 							assert(eHandler);
 						}
 						eHandler =true;//" exists so, num of " has to be 2 if String is normal 
@@ -309,7 +325,13 @@ bool isString(struct lexeme* lex, char* arr, int right, int left){
 
 	if(eHandler && numQ!=2){
 		// for num of " is odd
-		printf("ERROR!!!! The number of Double quotes are odd, so String doesn't stop!!! \n\n");
+		printf("ERROR!!!! The number of Double quotes are odd, so String doesn't stop!!! \n");
+		printf("the error is on line %d on  this part : ",lex->line);
+		for(int i =0 ; i<=count ;i++){
+				printf("%c",arr[left+i]);
+										}
+						printf("\n\n");
+
 		assert(numQ==2);
 	}
 
