@@ -13,6 +13,7 @@ struct lexeme {
 	int len;
 	char* lex;
 	bool ret;
+    int line;
 };
 
 struct tokenTree* varHead ;
