@@ -12,4 +12,14 @@ BOOL:true
 KeyWord:if
 IDENTIFIER:whle
 KeyWord:for
-IDENTIFIER:cha
+IDENTIFIER:ch
+Arithmatic:+
+Arithmatic:+
+Arithmatic:+
+IDENTIFIER:a
+INT:-1
+Arithmatic:-
+INT:1
+Assignment:=
+Assignment:=
+Assignment:=

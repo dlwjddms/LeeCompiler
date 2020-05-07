@@ -16,10 +16,8 @@
 */
 char convert(char* arr , int start, bool digit){
 	
-	//char*input = arr;
 	char output;
 	int i=start;
-	//while(arr[i]!=NULL){
 	char value = arr[i];
 
 		 if(digit && (value =='0'||value=='1'||value=='2'||value=='3'||value=='4'||value=='5'||value=='6'||value=='7'||value=='8'||value=='9'))
@@ -106,7 +104,6 @@ bool isFloat(struct lexeme * lex, char* arr, int right, int left){
 
 bool isVariable(struct lexeme * lex, char* arr, int right, int left){
 
-	//char* converted = convert(arr,left);
 	struct tokenTree *tmp = varHead;
 	int count =0;
 	lex->ret=false;
@@ -163,6 +160,8 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 
 				while(tmp!=NULL){
 					if(tmp->alpha==converted){
+
+					/* Error handling part */
 						if(first){
 							if(converted =='z'){
 								converted = convert(arr,left+count+1,false);
@@ -272,6 +271,8 @@ bool isString(struct lexeme* lex, char* arr, int right, int left){
 					}
 				}
 				if(tmp->alpha==converted){
+
+					/* Error handling part */
 					if(arr[left+count]=='"'){
 						if((!eHandler)&&(arr[left]==arr[left+1])){ //for "" error handling
 							printf("ERROR!!! String must have at least one digit or english letter or blank !!! \n ");
@@ -307,6 +308,7 @@ bool isString(struct lexeme* lex, char* arr, int right, int left){
 			
 	}
 
+	/* Error handling part */
 	if(eHandler && numQ!=2){
 		// for num of " is odd
 		printf("ERROR!!!! The number of Double quotes are odd, so String doesn't stop!!! \n");

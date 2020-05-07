@@ -40,6 +40,7 @@ struct symbolTable*  lexicalAnalyze(char* arr){
 	 *  Float >> Signed integer >> Arith
 	 *  Id >> integer
 	 *  Bool,varable,keyword >> Id
+	 *  Compare(==) >> assign(=)
 	 */
 	while(right<end/* until buffer got empty*/ ){
 		struct lexeme *lex = (struct lexeme*)malloc(sizeof(struct lexeme));
