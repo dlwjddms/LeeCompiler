@@ -1,6 +1,6 @@
 /*
-* - function prototypes
-* - structure for token node, lexeme
+* function prototypes
+* structure for token node, lexeme
 * init*() functions are structure of DFAs
 */
 

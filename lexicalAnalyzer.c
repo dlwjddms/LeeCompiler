@@ -326,7 +326,6 @@ bool isBoolean(struct lexeme* lex, char* arr, int right, int left){
 
 
 bool isKeyword(struct lexeme* lex, char* arr, int right, int left){
-
 	struct tokenTree *tmp = keyHead;
 	int count =0;
 	lex->ret=false;
@@ -339,6 +338,7 @@ bool isKeyword(struct lexeme* lex, char* arr, int right, int left){
 				tmp=tmp->sibState;
 		}
 		count ++;
+		
 		/* There is no state for this array */
 		if(tmp==NULL){
 			break;
