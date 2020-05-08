@@ -15,19 +15,15 @@ struct symbolTable{
 	struct symbolTable *next;
 };
 
-struct lexeme {
-
-	int len;
-	char* lex;
-	bool ret;
-	int line ;
-};
 /* variable for total assert*/
 bool success = true;
-struct symbolTable*  lexicalAnaylze(char* arr){
 
-	
+struct symbolTable*  lexicalAnalyze(char* arr){
+
+	/*this is used for printing the position of worng code */
 	int line =0;
+
+	/*The head of the symboltable group*/
 	struct symbolTable *head =(struct symbolTable*)malloc(sizeof(struct symbolTable));
 	struct symbolTable *oldNode = head;
 	bool firstInsert = true;
@@ -40,15 +36,26 @@ struct symbolTable*  lexicalAnaylze(char* arr){
 	int end = strlen(arr);
 	initTree();
 
+	/* -- priority --
+	 *  Float >> Signed integer >> Arith
+	 *  Id >> integer
+	 *  Bool,varable,keyword >> Id
+	 *  Compare(==) >> assign(=)
+	 */
 	while(right<end/* until buffer got empty*/ ){
 		struct lexeme *lex = (struct lexeme*)malloc(sizeof(struct lexeme));
 		lex ->line = line +1;
 		bool ret = false ;
-//	임시임;;;
+
+		int test =0;
 		ret = isWhiteSpace(lex,arr,right,left);
 		if(ret)
 			goto insert;
 
+		ret = isBoolean(lex,arr,right,left);
+		if(ret)
+			goto insert;
+		
 		ret = isVariable(lex,arr,right,left);
 		if(ret)
 			goto insert;
@@ -57,7 +64,7 @@ struct symbolTable*  lexicalAnaylze(char* arr){
 		if(ret)
 			goto insert;
 
-		ret = isBoolean(lex,arr,right,left);
+		ret = isIdentifier(lex,arr,right,left);
 		if(ret)
 			goto insert;
 
@@ -65,20 +72,63 @@ struct symbolTable*  lexicalAnaylze(char* arr){
 		if(ret)
 			goto insert;
 
+		printf("1111111111111\n");
 		ret = isString(lex,arr,right,left);
 		if(ret)
 			goto insert;
+			
+		printf("1111111111112\n");
+			
+		ret = isArithmeticop(lex,arr,right,left);
+		if(ret)
+			goto insert;
 
+		printf("1111111111113\n");
+		ret = isBitwiseop(lex,arr,right,left);
+		if(ret)
+			goto insert;
+		
+		printf("1111111111113\n");
+		ret = isComparisonop(lex,arr,right,left);
+		if(ret)
+			goto insert;
+		
+		printf("1111111111114\n");
+		ret = isAssignop(lex,arr,right,left);
+		if(ret)
+			goto insert;
 
+		printf("1111111111115\n");
+		ret = isTermin(lex,arr,right,left);
+		if(ret)
+			goto insert;
+		
+		printf("1111111111116\n");
+		ret = isBrace(lex,arr,right,left);
+		if(ret)
+			goto insert;
+		
+		printf("1111111111117\n");
+		ret = isParentheses(lex,arr,right,left);
+		if(ret)
+			goto insert;
+
+		printf("1111111111118\n");
+		ret = isSeperator(lex,arr,right,left);
+		if(ret)
+			goto insert;
+
+		printf("1111111111119\n");
 		/* when you are here there is no more valid token error is needed  */
+		printf("1111222222111111111\n");
 		free(lex);
 		success = false;
 		break;	
 
 	insert : 
+		printf("1111111111333333111\n");
 		right = left+ lex->len;
 		struct symbolTable* newNode = (struct symbolTable*)malloc(sizeof(struct symbolTable));
-		newNode-> prev = NULL;
 		newNode-> prev = NULL;
 		newNode-> name = lex->lex;
 
@@ -94,10 +144,6 @@ struct symbolTable*  lexicalAnaylze(char* arr){
 			}
 			newNode-> value= tmp;
 		
-
-	//	printf("\n 66: %s \n",tmp);
-	//	printf("count: %d left: %d, right:%d \n\n",lex->len,left,right);
-
 		if(firstInsert){
 			head = newNode;
 
@@ -122,17 +168,20 @@ struct symbolTable*  lexicalAnaylze(char* arr){
 
 int main(int argc, char* argv[]){
 
-	struct symbolTable *head =(struct symbolTable*)malloc(sizeof(struct symbolTable));
+	struct symbolTable *head;// =(struct symbolTable*)malloc(sizeof(struct symbolTable));
 
 
     int size;
     int count=1;
+
+	/* Input file open error handling */
 	if(argv[1] == NULL){
 		printf("file is not valid");
 		assert(argv[1] !=NULL);
 
 	}
 
+	/* Input file open */
     FILE *r_fp = fopen(argv[1], "r");   
 	fseek(r_fp, 0, SEEK_END);  
 	size = ftell(r_fp);
@@ -140,8 +189,12 @@ int main(int argc, char* argv[]){
 
 	char *lineBuf= malloc(size + 1);    
     memset(lineBuf, 0, size + 1); 
-	char*buffer =malloc(size+1);
 
+	/*Buffer for storing evet data*/
+	char*buffer =malloc(size+1);
+  
+
+	/* Read every thing until the file meets the end */
 	while(fgets(lineBuf,size,r_fp)!=NULL){
 		count++;
 		char*Tmp ;
@@ -153,33 +206,39 @@ int main(int argc, char* argv[]){
 		Tmp=NULL;
 	}
 
-    free(lineBuf);   // 동적 메모리 해제
+    free(lineBuf);   
 
-	head = lexicalAnaylze(buffer);
+	/* Send buffer to lexicalAnaylzer to make symbol table  */
+	head = lexicalAnalyze(buffer);
 
-	fclose(r_fp);     // 파일 포인터 닫기
-    free(buffer);   // 동적 메모리 해제
+	fclose(r_fp);   
+	free(buffer);   
 
 
 
 	/* Make output .out file which has same name with input file */
-	/*hello.txt 는 되는디 ./hello.txt는 안된다느넥 함정*/
+	/* The input file type must be hello.c not ./hello.c */
 	char*nameTmp = strtok(argv[1],".");
 	char *fileName =malloc(sizeof(char)*(strlen(nameTmp)+4));
 	strcpy(fileName, nameTmp);
 	strcat(fileName,".out");
-	FILE *w_fp = fopen(fileName, "a"); 
+	FILE *w_fp = fopen(fileName, "w"); 
 
+	/*File open error handling*/
 	if(!w_fp)
 		return 0;
 
 	struct symbolTable *tmp = head;
+
+	/*If symbol table exists store them into outputfile unless it is WS*/
+	char * ERROR ;
 	if(tmp !=NULL){
 		for( ;tmp != NULL ; tmp = tmp->next){
 			if(strcmp(tmp->name, "WS")){
 			fputs( tmp->name, w_fp);   // 파일에 문자열 저장
 			fputs( ":", w_fp);   // 파일에 문자열 저장
 			fputs( tmp->value, w_fp);   // 파일에 문자열 저장
+			ERROR = tmp->value;
 			fputs( "\n", w_fp);   // 파일에 문자열 저장
 			}
 		}
@@ -187,8 +246,9 @@ int main(int argc, char* argv[]){
 		
 	}
     fclose(w_fp); 
+
 	if(!success)
-		printf("ERROR!!!! : some code has not matching token!!! \n\n");
+		printf("ERROR!!!! : some code which is not allowed of using is used after ' %s '!!! \n\n",ERROR);
 	assert(success);
 	//symbolTables free is need... right..?
 

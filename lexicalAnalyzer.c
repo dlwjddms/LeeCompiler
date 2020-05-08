@@ -4,16 +4,6 @@
 #include<stdbool.h>
 #include "initTree.h"
 
-struct lexeme {
-
-	int len;
-	char* lex;
-	bool val;
-	//must erase this
-	bool ret;	
-	int line;
-
-};
 /* this funtion is for isFloat, isInterger ,isString
    DON'T use for isVariable or isKeyword or isBool !!! 
 
@@ -25,13 +15,9 @@ struct lexeme {
 
 */
 char convert(char* arr , int start, bool digit){
-	
-	//char*input = arr;
 	char output;
 	int i=start;
-	//while(arr[i]!=NULL){
 	char value = arr[i];
-
 		 if(digit && (value =='0'||value=='1'||value=='2'||value=='3'||value=='4'||value=='5'||value=='6'||value=='7'||value=='8'||value=='9'))
 			output='d';
 
@@ -58,10 +44,7 @@ char convert(char* arr , int start, bool digit){
 		
 		else if (value=='+')
 			output='P';	//Plus symbol
-/*
-		else if (value=='-')
-			output='S';	//Subtract symbol
-*/
+
 		else if (value=='*')
 			output='M';	//Multiplication symbol
 
@@ -113,15 +96,90 @@ char convert(char* arr , int start, bool digit){
 	return output;
 }
 
+//struct lexeme*isFloat(struct lexeme * lex, char* arr, int right, int left){
 bool isFloat(struct lexeme * lex, char* arr, int right, int left){
+
+	struct tokenTree *tmp = fHead;
+	int count =0;
+	int z_count =0;//count valid 0
+
+	lex->ret=false;
+	lex->lex=NULL;
+	lex->len=NULL;
+	bool first = true;
+	/* level*/ 
+	printf("11111 : %c %d\n",arr[left],lex->line);
+	while(tmp!=NULL){
+			char converted = convert(arr,left+count,false);
+				if(converted =='D'){
+					char converted2 = convert(arr,left+count+1,false);
+					if(converted2 != 'n'&& converted2 != 'z'){
+							printf(" in the right of the . n or z has to be come \n");
+							printf("the error is on line %d on  this part : ",lex->line);
+							for(int i =0 ; i<=count ;i++)
+								printf("%c",arr[left+i]);
+							printf("\n\n");
+									
+							assert(0);
+					}
+
+				}
+				while(tmp!=NULL){
+					if(tmp->alpha==converted){
+						if(converted == 'z'&&tmp->ret== true){
+										z_count = count;
+						}
+						/* Error handling part */
+						if(first){
+							if(converted == 'D'){
+								printf("left side of . has to be non empty sequence of something not like .xxx \n");
+								printf("the error is on line %d on  this part : ",lex->line);
+									for(int i =0 ; i<=count ;i++)
+										printf("%c",arr[left+i]);
+									printf("\n\n");
+									assert(0);
+							}else
+								first =false;
+						}else 
+							first =false;
+					
+						break;
+					
+					}else
+						tmp=tmp->sibState;
+				}
+				count ++;
+			/* There is no state for this array */
+			if(tmp==NULL){
+				 break;
+			}
+			/* Store things for lex */
+			lex->len = count;
+			lex->lex = NULL;
+			lex->ret=tmp->ret;
+
+			tmp = tmp->childState;
+			
+	}
+
+	if(lex->ret){
+		printf("7\n");
+		lex->lex = "FLOAT";
+		return lex;
+	}else if(arr[left+count-2]=='0'&&z_count!=0){
+		printf("8\n");
+		lex->len = z_count+1;
+		lex->lex = "FLOAT";
+		return lex;
+	}
+	else
+		printf("9\n");
+		return NULL;
 
 }
 
 bool isVariable(struct lexeme * lex, char* arr, int right, int left){
-
-	//char* converted = convert(arr,left);
 	struct tokenTree *tmp = varHead;
-	bool tmp_ret = false;
 	int count =0;
 	lex->ret=false;
 	/* level*/ 
@@ -150,9 +208,7 @@ bool isVariable(struct lexeme * lex, char* arr, int right, int left){
 	if(lex->ret){
 		lex->lex = "typeVar";
 		return true;
-	}
-
-	else
+	}else
 		return false;
 
 }
@@ -160,7 +216,6 @@ bool isVariable(struct lexeme * lex, char* arr, int right, int left){
 bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 
 	struct tokenTree *tmp = intHead;
-	bool tmp_ret = false;
 	int count =0;
 	lex->ret=false;
 	bool first = true;
@@ -168,61 +223,44 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 	/* level*/ 
 	while(tmp!=NULL){
 			char converted = convert(arr,left+count,false);
-
 				if(converted =='D'){
-
 						isF = isFloat( lex, arr, right,left);			
 						goto iFloat;
-	//					break;
 				}
-
 				while(tmp!=NULL){
 					if(tmp->alpha==converted){
-						if(first){
-							if(converted =='z'){
-								converted = convert(arr,left+count+1,false);
+					/* Error handling part */
+					if(first){
+						if(converted =='z'){
+							converted = convert(arr,left+count+1,false);
+							if(converted == 'D'){
+								isF = isFloat( lex, arr, right,left);
+								goto iFloat;
+							}else
+								first =false;
+						}else if(converted =='s'){
+							converted = convert(arr,left+count+1,false);
+							char findingdot = convert(arr,left+count+2,false);
 
-								if(converted == 'D'){
-									isF = isFloat( lex, arr, right,left);
-									goto iFloat;
-									//break;->return
-									}
-								else
-									first =false;
-								}
-							
-							else if(converted =='s'){
-								converted = convert(arr,left+count+1,false);
-								//	 this should be outside or not .. ? of first think more
-								char findingdot = convert(arr,left+count+2,false);
-								if(findingdot == 'D'){
-									isF = isFloat( lex, arr, right,left);
-									goto iFloat;
-									//	break;->return
-								}
-								else{
-									if(converted =='z'){
-										printf("ERROR!!!! :there is no zero with '-' !!!\n");
-											printf("the error is on line %d on  this part : ",lex->line);
-										for(int i =0 ; i<=count ;i++){
-											printf("%c",arr[left+i]);
-										}
-											printf("\n\n");
-
+							if(findingdot == 'D'){
+								isF = isFloat( lex, arr, right,left);
+								goto iFloat;
+							}else{
+								if(converted =='z'){
+									printf("ERROR!!!! :there is no zero with '-' !!!\n");
+									printf("the error is on line %d on  this part : ",lex->line);
+									for(int i =0 ; i<=count ;i++)
+										printf("%c",arr[left+i]);
+									printf("\n\n");
 									assert(converted !='z');
-									}
 								}
 							}
-
-							else
-								first =false;
+						}else
 							first =false;
-						}
-
-						break;
+						first= false;
 					}
-					else
-						tmp=tmp->sibState;
+						break;
+					}else tmp=tmp->sibState;
 				}
 				count ++;
 			/* There is no state for this array */
@@ -242,70 +280,56 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 	if(lex->ret){
 		lex->lex = "INT";
 		return true;
-	}
-
-	else
+	}else
 		return false;
 iFloat:
-		if(lex->ret){
-		lex->lex = "FLOAT";
+	if(isF){
+		printf("r : %s \n" , lex->lex);
+		printf("r : %d \n" , lex->len);
 		return true;
-		}
-	else
+	}else
 		return false;
 
 
 }
 
 bool isString(struct lexeme* lex, char* arr, int right, int left){
-
-
 	struct tokenTree *tmp = strHead;
-	bool tmp_ret = false;
 	int count =0;
 	lex->ret=false;
-
 	bool eHandler= false;
 	int numQ= 0;
 	/* level*/ 
 	while(tmp!=NULL){
 			char converted = convert(arr,left+count,true);
-
 			while(tmp!=NULL){
-				if(tmp->alpha==converted){
-					if(numQ==1){// we are in String
-						if(converted!='"'&&converted!='d'&&converted!='l'&&converted!='b'){
-							printf("ERROR!!! String is consist of only by digit or english letter or blank !!! \n ");
-								printf("the error is on line %d on  this part : ",lex->line);
-										for(int i =0 ; i<=count ;i++){
-											printf("%c",arr[left+i]);
-										}
-											printf("\n\n");
-
-							assert(eHandler);
-
+				if(numQ==1){// we are in String
+					if(converted!='"'&&converted!='d'&&converted!='l'&&converted!='b'){
+						printf("ERROR!!! String is consist of only by digit or english letter or blank !!! \n ");
+						printf("the error is on line %d on  this part : ",lex->line);
+						for(int i =0 ; i<=count ;i++){
+							printf("%c",arr[left+i]);
 						}
+						printf("\n\n");
+						assert(eHandler);
 					}
-
+				}
+				if(tmp->alpha==converted){
+					/* Error handling part */
 					if(arr[left+count]=='"'){
 						if((!eHandler)&&(arr[left]==arr[left+1])){ //for "" error handling
 							printf("ERROR!!! String must have at least one digit or english letter or blank !!! \n ");
 							printf("the error is on line %d on  this part : ",lex->line);
-										for(int i =0 ; i<=count ;i++){
-											printf("%c",arr[left+i]);
-										}
-											printf("\n\n");
-
+							for(int i =0 ; i<=count ;i++)
+								printf("%c",arr[left+i]);
+							printf("\n\n");
 							assert(eHandler);
 						}
 						eHandler =true;//" exists so, num of " has to be 2 if String is normal 
 						numQ++;
 					}
-
 					break;
-				}
-				else
-					tmp=tmp->sibState;
+				}else tmp=tmp->sibState;
 			}
 			count ++;
 
@@ -320,17 +344,17 @@ bool isString(struct lexeme* lex, char* arr, int right, int left){
 			lex->ret=tmp->ret;
 
 			tmp = tmp->childState;
-			
 	}
 
+	/* Error handling part */
 	if(eHandler && numQ!=2){
 		// for num of " is odd
 		printf("ERROR!!!! The number of Double quotes are odd, so String doesn't stop!!! \n");
 		printf("the error is on line %d on  this part : ",lex->line);
 		for(int i =0 ; i<=count ;i++){
-				printf("%c",arr[left+i]);
-										}
-						printf("\n\n");
+			printf("%c",arr[left+i]);
+		}
+		printf("\n\n");
 
 		assert(numQ==2);
 	}
@@ -338,67 +362,55 @@ bool isString(struct lexeme* lex, char* arr, int right, int left){
 	if(lex->ret){
 		lex->lex = "STRING";
 		return true;
-	}
-
-	else
+	}else
 		return false;
 
 }
 
 
-
 bool isBoolean(struct lexeme* lex, char* arr, int right, int left){
-
 	struct tokenTree *tmp = boHead;
-	bool tmp_ret = false;
 	int count =0;
 	lex->ret=false;
 	/* level*/ 
 	while(tmp!=NULL){
 		while(tmp!=NULL){
-			if(tmp->alpha==arr[left])
+			if(tmp->alpha==arr[left+count])
 				break;
-			else
-				tmp=tmp->sibState;
+			else tmp=tmp->sibState;
 		}
 		count ++;
+
 		/* There is no state for this array */
 		if(tmp==NULL){
 			break;
 		}
 		/* Store things for lex */
-		// I'm not sure this position is right
 		lex->len = count;
 		lex->lex = NULL;
 		lex->ret=tmp->ret;
-		//
-		left++;
+
 		tmp = tmp->childState;
 	}
 
 	if(lex->ret){
 		lex->lex = "BOOL";
 		return true;
-	}
-
-	else
+	}else
 		return false;
-
 }
 
 
 
 bool isKeyword(struct lexeme* lex, char* arr, int right, int left){
 
-
 	struct tokenTree *tmp = keyHead;
-	bool tmp_ret = false;
 	int count =0;
 	lex->ret=false;
 	/* level*/ 
 	while(tmp!=NULL){
 		while(tmp!=NULL){
-			if(tmp->alpha==arr[left])
+			if(tmp->alpha==arr[left + count])
 				break;
 			else
 				tmp=tmp->sibState;
@@ -413,53 +425,276 @@ bool isKeyword(struct lexeme* lex, char* arr, int right, int left){
 		lex->len = count;
 		lex->lex = NULL;
 		lex->ret=tmp->ret;
-		//
-		left++;
+
 		tmp = tmp->childState;
 	}
 
 	if(lex->ret){
 		lex->lex = "KeyWord";
 		return true;
-	}
-
-	else
-		
+	}else
 		return false;
 
 }
 
 
 bool isWhiteSpace(struct lexeme* lex, char* arr, int right, int left){
-
 	struct tokenTree *tmp ;//= strHead;
-	bool tmp_ret = false;
-	int count =0;
+	int count = 0;
 	lex->ret=false;
 	/* level*/ 
 	while(1){
-			char converted = convert(arr,left+count,false);
-
-				if('b'==converted){
-						/* Store things for lex */
-						// I'm not sure this position is right
-						count ++;
-						lex->len = count;
-						lex->lex = NULL;
-						lex->ret = true;
-				}
-				else
-				 break;
-				
+		char converted = convert(arr,left+count,false);
+		if('b' == converted){
+			/* Store things for lex */
+			count ++;
+			lex->len = count;
+			lex->lex = NULL;
+			lex->ret = true;
+		}else
+			break;
 	}
 	if(lex->ret){
 		lex->lex = "WS";
 		return true;
-	}
+	}else
+		return false;
+}
 
-	else
+//sangjin
+//identifier first implement
+//error handling needed
+bool isIdentifier(struct lexeme* lex, char* arr, int right, int left){
+	struct tokenTree *searchTree = idHead;
+	int count = 0;
+	lex->ret = false;
+		while(searchTree != NULL){	//level1
+			char converted = convert(arr, left + count, true);	//identifier는 0포함하는 digit사용(3번째 flag true)
+			while(searchTree != NULL){
+				if(searchTree->alpha == converted) break; //matching character나오면 break
+				else searchTree = searchTree->sibState;	//sibling 조사
+			}
+			count++;
+			if(searchTree == NULL)	//there is no state for this array
+				break;
+			/* Store things for lex (임시저장) */
+			lex->len = count;
+			lex->lex = NULL;
+			lex->ret = searchTree->ret;
+			searchTree = searchTree->childState; //child조사
+		}
+		if(lex->ret){
+			lex->lex = "IDENTIFIER";
+			return true;
+		}else
+			return false;
+}
+
+//sangjin
+//Bitwiseop first implement
+//error handling needed (KEEP IN MIND OF PRIORITY!)
+bool isBitwiseop(struct lexeme* lex, char* arr, int right, int left){
+	struct tokenTree *searchTree = btHead;
+	int count = 0;
+	lex->ret = false;
+	while(searchTree != NULL){
+		char converted = convert(arr, left+count, false);
+		while(searchTree != NULL){
+			if(searchTree->alpha == converted) break;
+			else searchTree = searchTree->sibState; //sibling 조사
+		}
+		count++;
+		if(searchTree == NULL)
+			break;
+		/* Store things for lex */
+		lex->len = count;
+		lex->lex = NULL;
+		lex->ret = searchTree->ret;
+		searchTree = searchTree->childState; //child 조사
+	}
+	if(lex->ret){
+		lex->lex = "Bitwise";
+		return true;
+	}else
+		return false;
+}
+
+//sangjin
+//Bitwiseop first implement
+//error handling needed
+bool isArithmeticop(struct lexeme* lex, char* arr, int right, int left){
+	struct tokenTree *searchTree = aritHead;
+	int count = 0;
+	lex->ret = false;
+	while(searchTree != NULL){
+		char converted = convert(arr, left+count, false);
+		while(searchTree != NULL){
+			if(searchTree->alpha == converted) break;
+			else searchTree = searchTree->sibState; //sibling 조사
+		}
+		count++;
+		if(searchTree == NULL)
+			break;
+		/* Store things for lex */
+		lex->len = count;
+		lex->lex = NULL;
+		lex->ret = searchTree->ret;
+		searchTree = searchTree->childState; //child 조사
+	}
+	if(lex->ret){
+		lex->lex = "Arithmatic";
+		return true;
+	}else
+		return false;
+}
+
+//sangjin
+//Assignop first implement
+//error handling needed (KEEP IN MIND OF PRIORITY!)
+bool isAssignop(struct lexeme* lex, char* arr, int right, int left){
+	struct tokenTree *searchTree = assiHead;
+	int count = 0;
+	lex->ret = false;
+	char converted;
+	if(searchTree != NULL)
+		converted = convert(arr, left+count, false);
+	if(searchTree->alpha == converted) {
+		count++;
+		/* Store things for lex */
+		lex->len = count;
+		lex->lex = "Assignment";
+		lex->ret = searchTree->ret;
+		return true;
+	}else
+		return false;
+}
+
+//sangjin
+//Comparisonop first implement
+//error handling needed (KEEP IN MIND OF PRIORITY!)
+bool isComparisonop(struct lexeme* lex, char* arr, int right, int left){
+	struct tokenTree *searchTree = compHead;
+	int count = 0;
+	lex->ret = false;
+	while(searchTree != NULL){
+		char converted = convert(arr, left+count, false);
+		while(searchTree != NULL){
+			if(searchTree->alpha == converted) break;
+			else searchTree = searchTree->sibState; //sibling 조사
+		}
+		count++;
+		if(searchTree == NULL)
+			break;
+		/* Store things for lex */
+		lex->len = count;
+		lex->lex = NULL;
+		lex->ret = searchTree->ret;
+		searchTree = searchTree->childState; //child 조사
+	}
+	if(lex->ret){
+		lex->lex = "Comparison";
+		return true;
+	}else
+		return false;
+}
+
+//sangjin
+//termination symbol first implement
+//error handling needed
+bool isTermin(struct lexeme* lex, char* arr, int right, int left){
+	struct tokenTree *searchTree = terHead;
+	int count = 0;
+	lex->ret = false;
+	char converted;
+	if(searchTree != NULL)
+		converted = convert(arr, left+count, false);
+	if(searchTree->alpha == converted) {
+		count++;
+		/* Store things for lex */
+		lex->len = count;
+		lex->lex = "Termination";
+		lex->ret = searchTree->ret;
+		return true;
+	}else
+		return false;
+}
+
+//sangjin
+//seperator symbol first implement
+//error handling needed
+bool isSeperator(struct lexeme* lex, char* arr, int right, int left){
+	struct tokenTree *searchTree = terHead;
+	int count = 0;
+	lex->ret = false;
+	char converted;
+	if(searchTree != NULL)
+		converted = convert(arr, left+count, false);
+	if(searchTree->alpha == converted) {
+		count++;
+		/* Store things for lex */
+		lex->len = count;
+		lex->lex = "Seperator";
+		lex->ret = searchTree->ret;
+		return true;
+	}else
 		return false;
 }
 
 
+//sangjin
+//Brace symbol first implement
+//error handling needed
+bool isBrace(struct lexeme* lex, char* arr, int right, int left){
+	struct tokenTree *searchTree = brcHead;
+	int count = 0;
+	lex->ret = false;
+	while(searchTree != NULL){
+		char converted = convert(arr, left+count, false);
+		while(searchTree != NULL){
+			if(searchTree->alpha == converted) break;
+			else searchTree = searchTree->sibState; //sibling 조사
+		}
+		count++;
+		if(searchTree == NULL)
+			break;
+		/* Store things for lex */
+		lex->len = count;
+		lex->lex = NULL;
+		lex->ret = searchTree->ret;
+		searchTree = searchTree->childState; //child 조사
+	}
+	if(lex->ret){
+		lex->lex = "Brace";
+		return true;
+	}else
+		return false;
+}
 
+//sangjin
+//Parentheses symbol first implement
+//error handling needed
+bool isParentheses(struct lexeme* lex, char* arr, int right, int left){
+	struct tokenTree *searchTree = parHead;
+	int count = 0;
+	lex->ret = false;
+	while(searchTree != NULL){
+		char converted = convert(arr, left+count, false);
+		while(searchTree != NULL){
+			if(searchTree->alpha == converted) break;
+			else searchTree = searchTree->sibState; //sibling 조사
+		}
+		count++;
+		if(searchTree == NULL)
+			break;
+		/* Store things for lex */
+		lex->len = count;
+		lex->lex = NULL;
+		lex->ret = searchTree->ret;
+		searchTree = searchTree->childState; //child 조사
+	}
+	if(lex->ret){
+		lex->lex = "Parentheses";
+		return true;
+	}else
+		return false;
+}

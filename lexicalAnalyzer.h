@@ -1,3 +1,8 @@
+/*
+* function prototypes
+* Is*() functions run DFAs
+*/
+
 #include<stdio.h>
 #include<string.h>
 
@@ -8,29 +13,12 @@ bool IsBoolean(struct lexeme* lex, char* arr, int right, int left);
 bool isFloat(struct lexeme* lex, char* arr, int right, int left);
 bool isKeyword(struct lexeme* lex, char* arr, int right, int left);
 bool isWhiteSpace(struct lexeme* lex, char* arr, int right, int left);
-
- 
-/*
-struct lexeme {
-
-	int len;
-	char* lex;
-
-};
-struct lexeme {
-
-	int len;
-	char* lex;
-	bool ret;
-
-};
-
-*/
-
-//zero
-//natural_num
-//sign
-//digit
-//letter
-//blank
-// 등 묶어서 하는거 정해야하튼디 
+bool isIdentifier(struct lexeme* lex, char* arr, int right, int left);
+bool isBitwiseop(struct lexeme* lex, char* arr, int right, int left);
+bool isComparisonop(struct lexeme* lex, char* arr, int right, int left);
+bool isAssignop(struct lexeme* lex, char* arr, int right, int left);
+bool isArithmeticop(struct lexeme* lex, char* arr, int right, int left);
+bool isTermin(struct lexeme* lex, char* arr, int right, int left);
+bool isBrace(struct lexeme* lex, char* arr, int right, int left);
+bool isParentheses(struct lexeme* lex, char* arr, int right, int left);
+bool isSeperator(struct lexeme* lex, char* arr, int right, int left);

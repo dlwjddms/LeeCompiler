@@ -4,31 +4,33 @@ INT:111111111112
 typeVar:bool
 STRING: ss 12gg
 STRING:djflskdlkdam
+IDENTIFIER:dndni
+typeVar:int
+IDENTIFIER:t
 BOOL:TRUE
 BOOL:true
 KeyWord:if
-KeyWord:while
+IDENTIFIER:whle
 KeyWord:for
-typeVar:int
-INT:-12311118888899999999996666666666666666668
-INT:111111111112
-typeVar:bool
-STRING: ss 12gg
-STRING:djflskdlkdam
-BOOL:TRUE
-BOOL:true
-KeyWord:if
-KeyWord:while
-KeyWord:for
-typeVar:int
-INT:-12311118888899999999996666666666666666668
-INT:111111111112
-typeVar:bool
-STRING: ss 12gg
-STRING:djflskdlkdam
-typeVar:int
-INT:-12311118888899999999996666666666666666668
-INT:111111111112ú
-typeVar:bool
-STRING: ss 12gg
-STRING:djfls
+IDENTIFIER:ch
+Arithmatic:+
+Arithmatic:+
+Arithmatic:+
+IDENTIFIER:a
+INT:-1
+Arithmatic:-
+INT:1
+FLOAT:123.4
+INT:0
+FLOAT:1.0
+INT:0
+FLOAT:0.0
+INT:0
+FLOAT:-0.0
+INT:0
+FLOAT:129.0
+INT:0
+INT:0
+INT:0
+INT:0
+INT:0

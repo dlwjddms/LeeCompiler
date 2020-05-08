@@ -2,7 +2,14 @@ int -12311118888899999999996666666666666666668 111111111112
 bool
 " ss 12gg"
 "djflskdlkdam"
-"dkdkd#olkd"
-00291818
+dndni
+intt
 TRUE true 
-if	while  for
+if	whle  for
+ch +++ a
+-1 - 1
+123.4
+01.0
+00.00
+-0.0
+0129.000000 
