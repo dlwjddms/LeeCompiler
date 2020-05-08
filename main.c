@@ -153,7 +153,6 @@ struct symbolTable*  lexicalAnalyze(char* arr){
 
 }
 
-
 int main(int argc, char* argv[]){
 
 	struct symbolTable *head =(struct symbolTable*)malloc(sizeof(struct symbolTable));

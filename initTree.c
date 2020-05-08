@@ -147,6 +147,10 @@ void initComparisonop(){
 	fLevel2 -> childState = sLevel1;
 	fLevel3 -> childState = sLevel1;
 	fLevel4 -> childState = sLevel1;
+
+	fLevel1 -> sibState = fLevel2;
+	fLevel2 -> sibState = fLevel3;
+	fLevel3 -> sibState = fLevel4;
 }
 
 void initAssignop(){
