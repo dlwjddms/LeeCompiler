@@ -203,7 +203,6 @@ int main(int argc, char* argv[]){
 	free(buffer);   
 
 
-
 	/* Make output .out file which has same name with input file */
 	/* The input file type must be hello.c not ./hello.c */
 	char*nameTmp = strtok(argv[1],".");

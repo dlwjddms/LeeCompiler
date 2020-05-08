@@ -142,29 +142,11 @@ void initComparisonop(){
 	sLevel1 -> childState = NULL;
 	sLevel1 -> sibState = NULL;
 
-	struct tokenTree *sLevel2 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
-	sLevel1 -> alpha = 'E';
-	sLevel1 -> ret = true;
-	sLevel1 -> childState = NULL;
-	sLevel1 -> sibState = NULL;
-
-	struct tokenTree *sLevel3 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
-	sLevel1 -> alpha = 'E';
-	sLevel1 -> ret = true;
-	sLevel1 -> childState = NULL;
-	sLevel1 -> sibState = NULL;
-
-	struct tokenTree *sLevel4 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
-	sLevel1 -> alpha = 'E';
-	sLevel1 -> ret = true;
-	sLevel1 -> childState = NULL;
-	sLevel1 -> sibState = NULL;
-
 	/* link state transitions */
 	fLevel1 -> childState = sLevel1;
-	fLevel2 -> childState = sLevel2;
-	fLevel3 -> childState = sLevel3;
-	fLevel4 -> childState = sLevel4;
+	fLevel2 -> childState = sLevel1;
+	fLevel3 -> childState = sLevel1;
+	fLevel4 -> childState = sLevel1;
 }
 
 void initAssignop(){
