@@ -241,7 +241,9 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 							if(findingdot == 'D'){
 								isF = isFloat( lex, arr, right,left);
 								goto iFloat;
-							}else{
+							}
+/*
+							else{
 								if(converted =='z'){
 									printf("ERROR!!!! :there is no zero with '-' !!!\n");
 									printf("the error is on line %d on  this part : ",lex->line);
@@ -250,7 +252,9 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 									printf("\n\n");
 									assert(converted !='z');
 								}
-							}
+						 
+						 }
+	*/
 						}else
 							first =false;
 						first= false;

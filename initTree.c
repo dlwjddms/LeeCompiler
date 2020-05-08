@@ -696,12 +696,9 @@ void initString(){
 //inteder error 011 or -0 or -01212
 void initInteger(){
 
-	/* Start state for varable tree */
-	//intHead ->ret = false;
 	
 	/* ForLlevel 1 */
 	struct tokenTree* fLevel1= (struct tokenTree*)malloc(sizeof(struct tokenTree)) ;		
-	//intHead ->childState= fLevel1;		
 	intHead = fLevel1;		
     fLevel1 ->alpha = 'z';
 	fLevel1 -> ret =true;
@@ -718,6 +715,7 @@ void initInteger(){
 
 	struct tokenTree* fLevel3= (struct tokenTree*)malloc(sizeof(struct tokenTree)) ;		
 	fLevel2 ->sibState = fLevel3;		
+	fLevel2 -> childState = fLevel3;
     fLevel3 -> alpha = 'n';
 	fLevel3 -> ret =true;
 	fLevel3->sibState = NULL;
@@ -739,10 +737,8 @@ void initInteger(){
 	sLevel4->sibState = NULL;
 	sLevel4->childState = NULL;
 
-	fLevel2 -> childState = fLevel3->childState;
 
 	/* For level 3 */
-	// is there any collision..??
 	sLevel3 ->childState = fLevel3->childState;
 	sLevel4 ->childState = fLevel3->childState;
 
