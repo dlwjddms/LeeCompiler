@@ -120,12 +120,13 @@ void initComparisonop(){
 	/* first level */
 	struct tokenTree *fLevel1 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
 	compHead  = fLevel1;
-    	fLevel1 -> alpha = 'L';
+    fLevel1 -> alpha = 'L';
 	fLevel1 -> ret= true;
 	fLevel1 -> childState = NULL;
 	fLevel1 -> sibState = NULL;
 
-	struct tokenTree *fLevel2 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
+	struct tokenTree *fLevel2 = 
+	(struct tokenTree*)malloc(sizeof(struct tokenTree));
 	fLevel2 -> alpha = 'G';
 	fLevel2 -> ret = true;
 	fLevel2 -> childState = NULL;
@@ -714,7 +715,6 @@ void initInteger(){
 
 	return ;
 }
-
 
 
 /* initialzation of variable type */

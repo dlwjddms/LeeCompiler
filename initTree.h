@@ -21,7 +21,6 @@ struct tokenTree* strHead ;
 struct tokenTree* boHead ;
 struct tokenTree* fHead ;
 struct tokenTree* keyHead ;
-
 struct tokenTree* idHead ;
 struct tokenTree* btHead ;
 struct tokenTree* compHead ;
@@ -40,7 +39,6 @@ void initString();
 void initInteger();
 void initFloat();
 void initVarTree();
-
 void initIdentifier();
 void initBitwiseop();
 void initComparisonop();

@@ -8,7 +8,6 @@ bool IsBoolean(struct lexeme* lex, char* arr, int right, int left);
 bool isFloat(struct lexeme* lex, char* arr, int right, int left);
 bool isKeyword(struct lexeme* lex, char* arr, int right, int left);
 bool isWhiteSpace(struct lexeme* lex, char* arr, int right, int left);
-//
 bool isIdentifier(struct lexeme* lex, char* arr, int right, int left);
 bool isBitwiseop(struct lexeme* lex, char* arr, int right, int left);
 bool isComparisonop(struct lexeme* lex, char* arr, int right, int left);

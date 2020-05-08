@@ -290,7 +290,6 @@ bool isString(struct lexeme* lex, char* arr, int right, int left){
 }
 
 
-
 bool isBoolean(struct lexeme* lex, char* arr, int right, int left){
 
 	struct tokenTree *tmp = boHead;
