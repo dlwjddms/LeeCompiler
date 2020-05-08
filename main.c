@@ -19,6 +19,11 @@ struct symbolTable{
 bool success = true;
 
 struct symbolTable*  lexicalAnalyze(char* arr){
+
+	/*this is used for printing the position of worng code */
+	int line =0;
+
+	/*The head of the symboltable group*/
 	struct symbolTable *head =(struct symbolTable*)malloc(sizeof(struct symbolTable));
 	struct symbolTable *oldNode = head;
 	bool firstInsert = true;
@@ -31,15 +36,18 @@ struct symbolTable*  lexicalAnalyze(char* arr){
 	int end = strlen(arr);
 	initTree();
 
-	/* priority */
-	// 1. Float
-	// 2. Signed integer
-	// 3. A
+	/* -- priority --
+	 *  Float >> Signed integer >> Arith
+	 *  Id >> integer
+	 *  Bool,varable,keyword >> Id
+	 *  Compare(==) >> assign(=)
+	 */
 	while(right<end/* until buffer got empty*/ ){
 		struct lexeme *lex = (struct lexeme*)malloc(sizeof(struct lexeme));
-
+		lex ->line = line +1;
 		bool ret = false ;
 
+		int test =0;
 		ret = isWhiteSpace(lex,arr,right,left);
 		if(ret)
 			goto insert;
@@ -56,6 +64,10 @@ struct symbolTable*  lexicalAnalyze(char* arr){
 		if(ret)
 			goto insert;
 
+		ret = isIdentifier(lex,arr,right,left);
+		if(ret)
+			goto insert;
+
 		ret = isInteger(lex,arr,right,left);
 		if(ret)
 			goto insert;
@@ -64,9 +76,6 @@ struct symbolTable*  lexicalAnalyze(char* arr){
 		if(ret)
 			goto insert;
 			
-		ret = isIdentifier(lex,arr,right,left);
-		if(ret)
-			goto insert;
 			
 		ret = isArithmeticop(lex,arr,right,left);
 		if(ret)
@@ -117,13 +126,12 @@ struct symbolTable*  lexicalAnalyze(char* arr){
 					tmp[j]=arr[left+i];
 					j++;
 				}
+				if(arr[left+i]=='\n')
+					line++;
+
 			}
 			newNode-> value= tmp;
 		
-
-	//	printf("\n 66: %s \n",tmp);
-	//	printf("count: %d left: %d, right:%d \n\n",lex->len,left,right);
-
 		if(firstInsert){
 			head = newNode;
 
@@ -153,12 +161,15 @@ int main(int argc, char* argv[]){
 
     int size;
     int count=1;
+
+	/* Input file open error handling */
 	if(argv[1] == NULL){
 		printf("file is not valid");
 		assert(argv[1] !=NULL);
 
 	}
 
+	/* Input file open */
     FILE *r_fp = fopen(argv[1], "r");   
 	fseek(r_fp, 0, SEEK_END);  
 	size = ftell(r_fp);
@@ -166,8 +177,12 @@ int main(int argc, char* argv[]){
 
 	char *lineBuf= malloc(size + 1);    
     memset(lineBuf, 0, size + 1); 
-	char*buffer =malloc(size+1);
 
+	/*Buffer for storing evet data*/
+	char*buffer =malloc(size+1);
+  
+
+	/* Read every thing until the file meets the end */
 	while(fgets(lineBuf,size,r_fp)!=NULL){
 		count++;
 		char*Tmp ;
@@ -179,27 +194,31 @@ int main(int argc, char* argv[]){
 		Tmp=NULL;
 	}
 
-    free(lineBuf);   // 동적 메모리 해제
+    free(lineBuf);   
 
+	/* Send buffer to lexicalAnaylzer to make symbol table  */
 	head = lexicalAnalyze(buffer);
 
-	fclose(r_fp);     // 파일 포인터 닫기
-    free(buffer);   // 동적 메모리 해제
+	fclose(r_fp);   
+	free(buffer);   
 
 
 
 	/* Make output .out file which has same name with input file */
-	/*hello.txt 는 되는디 ./hello.txt는 안된다느넥 함정*/
+	/* The input file type must be hello.c not ./hello.c */
 	char*nameTmp = strtok(argv[1],".");
 	char *fileName =malloc(sizeof(char)*(strlen(nameTmp)+4));
 	strcpy(fileName, nameTmp);
 	strcat(fileName,".out");
-	FILE *w_fp = fopen(fileName, "a"); 
+	FILE *w_fp = fopen(fileName, "w"); 
 
+	/*File open error handling*/
 	if(!w_fp)
 		return 0;
 
 	struct symbolTable *tmp = head;
+
+	/*If symbol table exists store them into outputfile unless it is WS*/
 	if(tmp !=NULL){
 		for( ;tmp != NULL ; tmp = tmp->next){
 			if(strcmp(tmp->name, "WS")){
@@ -215,7 +234,7 @@ int main(int argc, char* argv[]){
     fclose(w_fp); 
 
 	if(!success)
-		printf("ERROR!!!! : some code has not matching token!!! \n\n");
+		printf("ERROR!!!! : some code which is not allowed of using is used!!! \n\n");
 	assert(success);
 	//symbolTables free is need... right..?
 

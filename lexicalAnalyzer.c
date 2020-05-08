@@ -16,10 +16,8 @@
 */
 char convert(char* arr , int start, bool digit){
 	
-	//char*input = arr;
 	char output;
 	int i=start;
-	//while(arr[i]!=NULL){
 	char value = arr[i];
 
 		 if(digit && (value =='0'||value=='1'||value=='2'||value=='3'||value=='4'||value=='5'||value=='6'||value=='7'||value=='8'||value=='9'))
@@ -106,7 +104,6 @@ bool isFloat(struct lexeme * lex, char* arr, int right, int left){
 
 bool isVariable(struct lexeme * lex, char* arr, int right, int left){
 
-	//char* converted = convert(arr,left);
 	struct tokenTree *tmp = varHead;
 	int count =0;
 	lex->ret=false;
@@ -163,10 +160,23 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 
 				while(tmp!=NULL){
 					if(tmp->alpha==converted){
+
+					/* Error handling part */
 						if(first){
-							if(converted =='s'){
+							if(converted =='z'){
 								converted = convert(arr,left+count+1,false);
-								//	 this should be outside or not .. ? of first think more
+
+								if(converted == 'D'){
+									isF = isFloat( lex, arr, right,left);
+									goto iFloat;
+									//break;->return
+								}
+								else
+									first =false;
+							}
+
+							else if(converted =='s'){
+								converted = convert(arr,left+count+1,false);
 								char findingdot = convert(arr,left+count+2,false);
 								if(findingdot == 'D'){
 									isF = isFloat( lex, arr, right,left);
@@ -174,11 +184,20 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 									//	break;->return
 								}
 								else{
-									if(converted =='z')
-										printf("ERROR!!!! :there is no zero with '-' !!!\n\n");
-									assert(converted !='z');
+									if(converted =='z'){
+										printf("ERROR!!!! :there is no zero with '-' !!!\n");
+										printf("the error is on line %d on  this part : ",lex->line);
+										for(int i =0 ; i<=count ;i++){
+											printf("%c",arr[left+i]);
+										}
+										printf("\n\n");
+
+										assert(converted !='z');
+									}
 								}
 							}
+
+
 
 							else
 								first =false;
@@ -239,14 +258,30 @@ bool isString(struct lexeme* lex, char* arr, int right, int left){
 			while(tmp!=NULL){
 				if(numQ==1){// we are in String
 					if(converted!='"'&&converted!='d'&&converted!='l'&&converted!='b'){
-							printf("ERROR!!! String is consist of only by digit or english letter or blank !!! \n \n");
-							assert(eHandler);
+						printf("ERROR!!! String is consist of only by digit or english letter or blank !!! \n ");
+						printf("the error is on line %d on  this part : ",lex->line);
+						for(int i =0 ; i<=count ;i++){
+							printf("%c",arr[left+i]);
 						}
+						printf("\n\n");
+
+						assert(eHandler);
+
+
 					}
+				}
 				if(tmp->alpha==converted){
+
+					/* Error handling part */
 					if(arr[left+count]=='"'){
 						if((!eHandler)&&(arr[left]==arr[left+1])){ //for "" error handling
-							printf("ERROR!!! String must have at least one digit or english letter or blank !!! \n \n");
+							printf("ERROR!!! String must have at least one digit or english letter or blank !!! \n ");
+							printf("the error is on line %d on  this part : ",lex->line);
+							for(int i =0 ; i<=count ;i++){
+								printf("%c",arr[left+i]);
+							}
+							printf("\n\n");
+
 							assert(eHandler);
 						}
 						eHandler =true;//" exists so, num of " has to be 2 if String is normal 
@@ -273,9 +308,16 @@ bool isString(struct lexeme* lex, char* arr, int right, int left){
 			
 	}
 
+	/* Error handling part */
 	if(eHandler && numQ!=2){
 		// for num of " is odd
-		printf("ERROR!!!! The number of Double quotes are odd, so String doesn't stop!!! \n\n");
+		printf("ERROR!!!! The number of Double quotes are odd, so String doesn't stop!!! \n");
+		printf("the error is on line %d on  this part : ",lex->line);
+		for(int i =0 ; i<=count ;i++){
+			printf("%c",arr[left+i]);
+		}
+		printf("\n\n");
+
 		assert(numQ==2);
 	}
 
@@ -298,7 +340,7 @@ bool isBoolean(struct lexeme* lex, char* arr, int right, int left){
 	/* level*/ 
 	while(tmp!=NULL){
 		while(tmp!=NULL){
-			if(tmp->alpha==arr[left])
+			if(tmp->alpha==arr[left+count])
 				break;
 			else
 				tmp=tmp->sibState;
@@ -309,12 +351,10 @@ bool isBoolean(struct lexeme* lex, char* arr, int right, int left){
 			break;
 		}
 		/* Store things for lex */
-		// I'm not sure this position is right
 		lex->len = count;
 		lex->lex = NULL;
 		lex->ret=tmp->ret;
 		//
-		left++;
 		tmp = tmp->childState;
 	}
 

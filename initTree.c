@@ -391,27 +391,32 @@ void initKeyword(){
 
 	struct tokenTree *sLevel1 =(struct tokenTree*)malloc(sizeof(struct tokenTree));
 	fLevel1->childState = sLevel1;		
+	sLevel1->sibState = NULL;		
 	sLevel1->childState = NULL;		
     sLevel1 -> alpha = 'f';
 	sLevel1 -> ret= true;
 
 	struct tokenTree *sLevel2 =(struct tokenTree*)malloc(sizeof(struct tokenTree));
 	fLevel2->childState = sLevel2;		
+	sLevel2->sibState = NULL;		
     sLevel2 -> alpha = 'l';
 	sLevel2 -> ret= false;
 	
 	struct tokenTree *sLevel3 =(struct tokenTree*)malloc(sizeof(struct tokenTree));
 	fLevel3->childState = sLevel3;		
+	sLevel3->sibState = NULL;		
     sLevel3 -> alpha = 'h';
 	sLevel3 -> ret= false;
 	
 	struct tokenTree *sLevel4 =(struct tokenTree*)malloc(sizeof(struct tokenTree));
 	fLevel4->childState = sLevel4;		
+	sLevel4->sibState = NULL;		
     sLevel4 -> alpha = 'o';
 	sLevel4 -> ret= false;
 	
 	struct tokenTree *sLevel5 =(struct tokenTree*)malloc(sizeof(struct tokenTree));
 	fLevel5->childState = sLevel5;		
+	sLevel5->sibState = NULL;		
     sLevel5 -> alpha = 'e';
 	sLevel5 -> ret= false;
 
@@ -419,22 +424,26 @@ void initKeyword(){
 
 	struct tokenTree *tLevel2 =(struct tokenTree*)malloc(sizeof(struct tokenTree));
 	sLevel2->childState = tLevel2;		
+	tLevel2->sibState = NULL;		
     tLevel2 -> alpha = 's';
 	tLevel2 -> ret= false;
 	
 	struct tokenTree *tLevel3 =(struct tokenTree*)malloc(sizeof(struct tokenTree));
 	sLevel3->childState = tLevel3;		
+	tLevel3->sibState = NULL;		
     tLevel3 -> alpha = 'i';
 	tLevel3 -> ret= false;
 	
 	struct tokenTree *tLevel4 =(struct tokenTree*)malloc(sizeof(struct tokenTree));
 	sLevel4->childState = tLevel4;		
+	tLevel4->sibState = NULL;		
 	tLevel4->childState = NULL;		
     tLevel4 -> alpha = 'r';
 	tLevel4 -> ret= true;
 	
 	struct tokenTree *tLevel5 =(struct tokenTree*)malloc(sizeof(struct tokenTree));
 	sLevel5->childState = tLevel5;		
+	tLevel5->sibState = NULL;		
     tLevel5 -> alpha = 't';
 	tLevel5 -> ret= false;
 
@@ -443,6 +452,7 @@ void initKeyword(){
 
 	struct tokenTree *frLevel2 =(struct tokenTree*)malloc(sizeof(struct tokenTree));
 	tLevel2->childState = frLevel2;		
+	frLevel2->sibState = NULL;		
 	frLevel2->childState = NULL;		
     frLevel2 -> alpha = 'e';
 	frLevel2 -> ret= true;
@@ -450,10 +460,12 @@ void initKeyword(){
 	struct tokenTree *frLevel3 =(struct tokenTree*)malloc(sizeof(struct tokenTree));
 	tLevel3->childState = frLevel3;		
     frLevel3 -> alpha = 'l';
+	frLevel3->sibState = NULL;		
 	frLevel3 -> ret= false;
 	
 	struct tokenTree *frLevel5 =(struct tokenTree*)malloc(sizeof(struct tokenTree));
 	tLevel5->childState = frLevel5;		
+	frLevel5->sibState = NULL;		
     frLevel5 -> alpha = 'u';
 	frLevel5 -> ret= false;
 
@@ -462,12 +474,14 @@ void initKeyword(){
 
 	struct tokenTree *fiLevel3 =(struct tokenTree*)malloc(sizeof(struct tokenTree));
 	frLevel3->childState = fiLevel3;		
+	fiLevel3->sibState = NULL;		
 	fiLevel3->childState = NULL;		
     fiLevel3 -> alpha = 'e';
 	fiLevel3 -> ret= true;
 	
 	struct tokenTree *fiLevel5 =(struct tokenTree*)malloc(sizeof(struct tokenTree));
 	frLevel5->childState = fiLevel5;		
+	fiLevel5->sibState = NULL;		
     fiLevel5 -> alpha = 'r';
 	fiLevel5 -> ret= false;
 
@@ -476,6 +490,7 @@ void initKeyword(){
 
 	struct tokenTree *siLevel5 =(struct tokenTree*)malloc(sizeof(struct tokenTree));
 	fiLevel5->childState = siLevel5;		
+	fiLevel5->sibState = NULL;		
 	siLevel5->childState = NULL;		
     siLevel5 -> alpha = 'n';
 	siLevel5 -> ret= true;
@@ -515,66 +530,78 @@ void initBoolean(){
 	/* For level 2 */
 	struct tokenTree *sLevel1=(struct tokenTree*)malloc(sizeof(struct tokenTree));
 	fLevel1 ->childState = sLevel1 ;		
+	sLevel1 ->sibState =  NULL;		
     sLevel1 ->alpha = 'r';
 	sLevel1 -> ret =false;
 
 	struct tokenTree *sLevel2=(struct tokenTree*)malloc(sizeof(struct tokenTree));
 	fLevel2 ->childState = sLevel2 ;		
+	sLevel2 ->sibState =  NULL;		
     sLevel2 -> alpha = 'a';
 	sLevel2 -> ret =false;
 
 	struct tokenTree *sLevel3 =(struct tokenTree*)malloc(sizeof(struct tokenTree));
 	fLevel3 ->childState =  sLevel3 ;		
+	sLevel3 ->sibState =  NULL;		
     sLevel3 -> alpha = 'R';
 	sLevel3 -> ret =false;
     
 	struct tokenTree *sLevel4 =(struct tokenTree*)malloc(sizeof(struct tokenTree));
 	fLevel4 ->childState =sLevel4;		
+	sLevel4 ->sibState =  NULL;		
     sLevel4 -> alpha = 'A';
 	sLevel4 -> ret =false;
 
 	/* For level 3 */
 	struct tokenTree *tLevel1 =(struct tokenTree*)malloc(sizeof(struct tokenTree));
 	sLevel1 ->childState = tLevel1 ;		
+	tLevel1 ->sibState =  NULL;		
     tLevel1 -> alpha = 'u';
 	tLevel1 -> ret =false;
 	tLevel1->childState= NULL;
 
 	struct tokenTree *tLevel2=(struct tokenTree*)malloc(sizeof(struct tokenTree));
 	sLevel2 ->childState =  tLevel2; 	
+	tLevel2 ->sibState =  NULL;		
     tLevel2 -> alpha = 'l';
 	tLevel2 -> ret =false;
 
 	struct tokenTree *tLevel3 =(struct tokenTree*)malloc(sizeof(struct tokenTree));
 	sLevel3 ->childState = tLevel3;		
+	tLevel3 ->sibState =  NULL;		
     tLevel3 -> alpha = 'U';
 	tLevel3 -> ret =false;
     
 	struct tokenTree *tLevel4=(struct tokenTree*)malloc(sizeof(struct tokenTree)) ;
 	sLevel4 ->childState = tLevel4;		
+	tLevel4 ->sibState =  NULL;		
     tLevel4 -> alpha = 'L';
 	tLevel4 -> ret =false;
 
 	/* For level 4 */
 	struct tokenTree *frLevel1 =(struct tokenTree*)malloc(sizeof(struct tokenTree));
 	tLevel1 ->childState = frLevel1;		
+	frLevel1 ->sibState =  NULL;		
     frLevel1 -> alpha = 'e';
 	frLevel1 -> ret= true;
 	frLevel1->childState= NULL;
 
 	struct tokenTree *frLevel2=(struct tokenTree*)malloc(sizeof(struct tokenTree));
 	tLevel2 ->childState = frLevel2; 		
+	frLevel2 ->sibState =  NULL;		
     frLevel2 -> alpha = 's';
 	frLevel2 -> ret= false;
 
 	struct tokenTree *frLevel3=(struct tokenTree*)malloc(sizeof(struct tokenTree));
 	tLevel3 ->childState = frLevel3;		
+	frLevel3 ->sibState =  NULL;		
     frLevel3 -> alpha = 'E';
 	frLevel3 -> ret =true;
 	frLevel3->childState= NULL;
 	
 	struct tokenTree *frLevel4=(struct tokenTree*)malloc(sizeof(struct tokenTree));
 	tLevel4 ->childState =  frLevel4; 		
+	frLevel4 ->sibState =  NULL;		
     frLevel4 -> alpha = 'S';
 	frLevel4 -> ret =false;
 
@@ -582,12 +609,14 @@ void initBoolean(){
 	/* For level 5*/
 	struct tokenTree *fiLevel2 =(struct tokenTree*)malloc(sizeof(struct tokenTree));
 	frLevel2 ->childState = fiLevel2;		
+	fiLevel2 ->sibState =  NULL;		
     fiLevel2 -> alpha = 'e';
 	fiLevel2 -> ret =true;
 	fiLevel2->childState= NULL;
 
 	struct tokenTree *fiLevel4=(struct tokenTree*)malloc(sizeof(struct tokenTree));
 	frLevel4 ->childState =  fiLevel4; 		
+	fiLevel4 ->sibState =  NULL;		
     fiLevel4 -> alpha = 'E';
 	fiLevel4 -> ret =true;
 	fiLevel4->childState= NULL;
