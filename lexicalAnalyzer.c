@@ -108,7 +108,6 @@ bool isFloat(struct lexeme * lex, char* arr, int right, int left){
 	lex->len=NULL;
 	bool first = true;
 	/* level*/ 
-	printf("11111 : %c %d\n",arr[left],lex->line);
 	while(tmp!=NULL){
 			char converted = convert(arr,left+count,false);
 				if(converted =='D'){
@@ -163,17 +162,14 @@ bool isFloat(struct lexeme * lex, char* arr, int right, int left){
 	}
 
 	if(lex->ret){
-		printf("7\n");
 		lex->lex = "FLOAT";
 		return lex;
 	}else if(arr[left+count-2]=='0'&&z_count!=0){
-		printf("8\n");
 		lex->len = z_count+1;
 		lex->lex = "FLOAT";
 		return lex;
 	}
 	else
-		printf("9\n");
 		return NULL;
 
 }
@@ -579,7 +575,9 @@ bool isComparisonop(struct lexeme* lex, char* arr, int right, int left){
 	while(searchTree != NULL){
 		char converted = convert(arr, left+count, false);
 		while(searchTree != NULL){
-			if(searchTree->alpha == converted) break;
+			printf("%c, %c",converted, searchTree->alpha);
+			if(searchTree->alpha == converted)
+				break;
 			else searchTree = searchTree->sibState; //sibling 조사
 		}
 		count++;
@@ -589,8 +587,10 @@ bool isComparisonop(struct lexeme* lex, char* arr, int right, int left){
 		lex->len = count;
 		lex->lex = NULL;
 		lex->ret = searchTree->ret;
+
 		searchTree = searchTree->childState; //child 조사
 	}
+
 	if(lex->ret){
 		lex->lex = "Comparison";
 		return true;

@@ -114,26 +114,26 @@ void initComparisonop(){
     fLevel1 -> alpha = 'L';
 	fLevel1 -> ret= true;
 	fLevel1 -> childState = NULL;
-	fLevel1 -> sibState = NULL;
 
 	struct tokenTree *fLevel2 = 
 	(struct tokenTree*)malloc(sizeof(struct tokenTree));
 	fLevel2 -> alpha = 'G';
 	fLevel2 -> ret = true;
 	fLevel2 -> childState = NULL;
-	fLevel2 -> sibState = NULL;
+	fLevel1 -> sibState = fLevel2;
 
 	struct tokenTree *fLevel3 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
-	fLevel2 -> alpha = 'E';
-	fLevel2 -> ret = false;
-	fLevel2 -> childState = NULL;
-	fLevel2 -> sibState = NULL;
+	fLevel3 -> alpha = 'E';
+	fLevel3 -> ret = false;
+	fLevel3 -> childState = NULL;
+	fLevel2 -> sibState = fLevel3;
 
 	struct tokenTree *fLevel4 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
-	fLevel2 -> alpha = 'N';
-	fLevel2 -> ret = false;
-	fLevel2 -> childState = NULL;
-	fLevel2 -> sibState = NULL;
+	fLevel4 -> alpha = 'N';
+	fLevel4 -> ret = false;
+	fLevel4 -> childState = NULL;
+	fLevel3 -> sibState = fLevel4;
+	fLevel4 -> sibState = NULL;
 
 	/* second level */
 	struct tokenTree *sLevel1 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
@@ -142,29 +142,11 @@ void initComparisonop(){
 	sLevel1 -> childState = NULL;
 	sLevel1 -> sibState = NULL;
 
-	struct tokenTree *sLevel2 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
-	sLevel1 -> alpha = 'E';
-	sLevel1 -> ret = true;
-	sLevel1 -> childState = NULL;
-	sLevel1 -> sibState = NULL;
-
-	struct tokenTree *sLevel3 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
-	sLevel1 -> alpha = 'E';
-	sLevel1 -> ret = true;
-	sLevel1 -> childState = NULL;
-	sLevel1 -> sibState = NULL;
-
-	struct tokenTree *sLevel4 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
-	sLevel1 -> alpha = 'E';
-	sLevel1 -> ret = true;
-	sLevel1 -> childState = NULL;
-	sLevel1 -> sibState = NULL;
-
 	/* link state transitions */
 	fLevel1 -> childState = sLevel1;
-	fLevel2 -> childState = sLevel2;
-	fLevel3 -> childState = sLevel3;
-	fLevel4 -> childState = sLevel4;
+	fLevel2 -> childState = sLevel1;
+	fLevel3 -> childState = sLevel1;
+	fLevel4 -> childState = sLevel1;
 }
 
 void initAssignop(){

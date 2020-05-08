@@ -34,3 +34,6 @@ INT:0
 INT:0
 INT:0
 INT:0
+Comparison:==
+Comparison:!=
+Comparison:>
