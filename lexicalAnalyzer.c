@@ -87,7 +87,7 @@ char convert(char* arr , int start, bool digit){
 		else if(value==')')
 			output='t';	//right parentheses symbol
 
-		else if(value==')')
+		else if(value==',')
 			output='p';	//seperator symbol
 		else
 			output='0';

@@ -111,7 +111,7 @@ void initComparisonop(){
 	/* first level */
 	struct tokenTree *fLevel1 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
 	compHead  = fLevel1;
-    fLevel1 -> alpha = 'L';
+	fLevel1 -> alpha = 'L';
 	fLevel1 -> ret= true;
 	fLevel1 -> childState = NULL;
 	fLevel1 -> sibState = NULL;
@@ -176,7 +176,7 @@ void initArithop(){
 	fLevel1 -> sibState = NULL;
 
 	struct tokenTree *fLevel2 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
-	fLevel2 -> alpha = 's';
+	fLevel2 -> alpha = 'u';
 	fLevel2 -> ret = true;
 	fLevel2 -> childState = NULL;
 	fLevel2 -> sibState = NULL;
