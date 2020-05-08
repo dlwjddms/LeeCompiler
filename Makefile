@@ -1,5 +1,3 @@
-$(shell source ~/.zshrc) 
-$(shell export PATH=PATH:.)
 lexical_analyzer: main.o lexicalAnalyzer.o initTree.o
 	gcc -o lexical_analyzer main.o lexicalAnalyzer.o initTree.o
 	 
