@@ -72,13 +72,13 @@ void initBitwiseop(){
 	fLevel2 -> sibState = NULL;
 
 	struct tokenTree *fLevel3 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
-	fLevel3 -> alpha = 'a';
+	fLevel3 -> alpha = 'A';
 	fLevel3 -> ret = true;
 	fLevel3 -> childState = NULL;
 	fLevel3 -> sibState = NULL;
 
 	struct tokenTree *fLevel4 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
-	fLevel4 -> alpha = 'o';
+	fLevel4 -> alpha = 'O';
 	fLevel4 -> ret = true;
 	fLevel4 -> childState = NULL;
 	fLevel4 -> sibState = NULL;

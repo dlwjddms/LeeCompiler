@@ -37,3 +37,4 @@ INT:0
 Comparison:==
 Comparison:!=
 Comparison:>
+Bitwise:&
