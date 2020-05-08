@@ -1,3 +1,8 @@
+/*
+* function prototypes
+* Is*() functions run DFAs
+*/
+
 #include<stdio.h>
 #include<string.h>
 

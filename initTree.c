@@ -4,15 +4,6 @@
 #include<stdlib.h>
 #include "initTree.h"
 
-//bool isVariable();
-//bool isInteger();
-//bool isString();
-//bool IsBoolean();
-//bool isFloat();
-//bool isKeyword(struct lexeme* lex, char* arr, int right, int left);
-
-//struct tokenTree* getNewNode (){};
-
 void initIdentifier(){
 	/* Start state for Identifier tree */
 
@@ -293,6 +284,7 @@ void initSeperator(){
 }
 
 void initFloat(){
+	/* Start state for float tree */
 
 	/* For level 1 */
 	struct tokenTree *fLevel1 =(struct tokenTree*)malloc(sizeof(struct tokenTree));
@@ -500,7 +492,6 @@ void initKeyword(){
 } 
 
 void initBoolean(){
-
 	/* Start state for boolean tree */
 	//oboHead ->ret = false;
 
@@ -625,7 +616,6 @@ void initBoolean(){
 
 
 void initString(){
-
 	/* Start state for varable tree */
 	//strHead ->ret = false;
 	
@@ -683,7 +673,6 @@ void initString(){
 	tLevel2 ->childState = sLevel1 ->childState;
 	tLevel3 ->childState = sLevel1 ->childState;
 	
-
 	return ;
 }
 
@@ -694,7 +683,6 @@ void initInteger(){
 	/* Start state for varable tree */
 	//intHead ->ret = false;
 	
-
 	/* ForLlevel 1 */
 	struct tokenTree* fLevel1= (struct tokenTree*)malloc(sizeof(struct tokenTree)) ;		
 	//intHead ->childState= fLevel1;		
@@ -748,7 +736,6 @@ void initInteger(){
 
 /* initialzation of variable type */
 void initVarTree(){
-	
 	/* Start state for varable tree */
 	//varHead ->ret = false;
 

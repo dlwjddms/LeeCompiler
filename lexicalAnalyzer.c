@@ -15,11 +15,9 @@
 
 */
 char convert(char* arr , int start, bool digit){
-	
 	char output;
 	int i=start;
 	char value = arr[i];
-
 		 if(digit && (value =='0'||value=='1'||value=='2'||value=='3'||value=='4'||value=='5'||value=='6'||value=='7'||value=='8'||value=='9'))
 			output='d';
 
@@ -103,7 +101,6 @@ bool isFloat(struct lexeme * lex, char* arr, int right, int left){
 }
 
 bool isVariable(struct lexeme * lex, char* arr, int right, int left){
-
 	struct tokenTree *tmp = varHead;
 	int count =0;
 	lex->ret=false;
@@ -133,9 +130,7 @@ bool isVariable(struct lexeme * lex, char* arr, int right, int left){
 	if(lex->ret){
 		lex->lex = "typeVar";
 		return true;
-	}
-
-	else
+	}else
 		return false;
 
 }
@@ -150,64 +145,46 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 	/* level*/ 
 	while(tmp!=NULL){
 			char converted = convert(arr,left+count,false);
-
 				if(converted =='D'){
-
 						isF = isFloat( lex, arr, right,left);			
 						goto iFloat;
 	//					break;
 				}
-
 				while(tmp!=NULL){
 					if(tmp->alpha==converted){
-
 					/* Error handling part */
-						if(first){
-							if(converted =='z'){
-								converted = convert(arr,left+count+1,false);
-
-								if(converted == 'D'){
-									isF = isFloat( lex, arr, right,left);
-									goto iFloat;
-									//break;->return
-								}
-								else
-									first =false;
-							}
-
-							else if(converted =='s'){
-								converted = convert(arr,left+count+1,false);
-								char findingdot = convert(arr,left+count+2,false);
-								if(findingdot == 'D'){
-									isF = isFloat( lex, arr, right,left);
-									goto iFloat;
-									//	break;->return
-								}
-								else{
-									if(converted =='z'){
-										printf("ERROR!!!! :there is no zero with '-' !!!\n");
-										printf("the error is on line %d on  this part : ",lex->line);
-										for(int i =0 ; i<=count ;i++){
-											printf("%c",arr[left+i]);
-										}
-										printf("\n\n");
-
-										assert(converted !='z');
-									}
-								}
-							}
-
-
-
-							else
+					if(first){
+						if(converted =='z'){
+							converted = convert(arr,left+count+1,false);
+							if(converted == 'D'){
+								isF = isFloat( lex, arr, right,left);
+								goto iFloat;
+								//break;->return
+							}else
 								first =false;
-							first =false;
-						}
+						}else if(converted =='s'){
+							converted = convert(arr,left+count+1,false);
+							char findingdot = convert(arr,left+count+2,false);
 
-						break;
+							if(findingdot == 'D'){
+								isF = isFloat( lex, arr, right,left);
+								goto iFloat;
+								//	break;->return
+							}else{
+								if(converted =='z'){
+									printf("ERROR!!!! :there is no zero with '-' !!!\n");
+									printf("the error is on line %d on  this part : ",lex->line);
+									for(int i =0 ; i<=count ;i++)
+										printf("%c",arr[left+i]);
+									printf("\n\n");
+									assert(converted !='z');
+								}
+							}
+						}else first =false;
+					first =false;
 					}
-					else
-						tmp=tmp->sibState;
+						break;
+					}else tmp=tmp->sibState;
 				}
 				count ++;
 			/* There is no state for this array */
@@ -227,34 +204,27 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 	if(lex->ret){
 		lex->lex = "INT";
 		return true;
-	}
-
-	else
+	}else
 		return false;
 iFloat:
-		if(lex->ret){
+	if(lex->ret){
 		lex->lex = "FLOAT";
 		return true;
-		}
-	else
+	}else
 		return false;
 
 
 }
 
 bool isString(struct lexeme* lex, char* arr, int right, int left){
-
-
 	struct tokenTree *tmp = strHead;
 	int count =0;
 	lex->ret=false;
-
 	bool eHandler= false;
 	int numQ= 0;
 	/* level*/ 
 	while(tmp!=NULL){
 			char converted = convert(arr,left+count,true);
-
 			while(tmp!=NULL){
 				if(numQ==1){// we are in String
 					if(converted!='"'&&converted!='d'&&converted!='l'&&converted!='b'){
@@ -264,33 +234,25 @@ bool isString(struct lexeme* lex, char* arr, int right, int left){
 							printf("%c",arr[left+i]);
 						}
 						printf("\n\n");
-
 						assert(eHandler);
-
-
 					}
 				}
 				if(tmp->alpha==converted){
-
 					/* Error handling part */
 					if(arr[left+count]=='"'){
 						if((!eHandler)&&(arr[left]==arr[left+1])){ //for "" error handling
 							printf("ERROR!!! String must have at least one digit or english letter or blank !!! \n ");
 							printf("the error is on line %d on  this part : ",lex->line);
-							for(int i =0 ; i<=count ;i++){
+							for(int i =0 ; i<=count ;i++)
 								printf("%c",arr[left+i]);
-							}
 							printf("\n\n");
-
 							assert(eHandler);
 						}
 						eHandler =true;//" exists so, num of " has to be 2 if String is normal 
 						numQ++;
 					}
 					break;
-				}
-				else
-					tmp=tmp->sibState;
+				}else tmp=tmp->sibState;
 			}
 			count ++;
 
@@ -305,7 +267,6 @@ bool isString(struct lexeme* lex, char* arr, int right, int left){
 			lex->ret=tmp->ret;
 
 			tmp = tmp->childState;
-			
 	}
 
 	/* Error handling part */
@@ -324,16 +285,13 @@ bool isString(struct lexeme* lex, char* arr, int right, int left){
 	if(lex->ret){
 		lex->lex = "STRING";
 		return true;
-	}
-
-	else
+	}else
 		return false;
 
 }
 
 
 bool isBoolean(struct lexeme* lex, char* arr, int right, int left){
-
 	struct tokenTree *tmp = boHead;
 	int count =0;
 	lex->ret=false;
@@ -342,10 +300,10 @@ bool isBoolean(struct lexeme* lex, char* arr, int right, int left){
 		while(tmp!=NULL){
 			if(tmp->alpha==arr[left+count])
 				break;
-			else
-				tmp=tmp->sibState;
+			else tmp=tmp->sibState;
 		}
 		count ++;
+
 		/* There is no state for this array */
 		if(tmp==NULL){
 			break;
@@ -354,18 +312,15 @@ bool isBoolean(struct lexeme* lex, char* arr, int right, int left){
 		lex->len = count;
 		lex->lex = NULL;
 		lex->ret=tmp->ret;
-		//
+
 		tmp = tmp->childState;
 	}
 
 	if(lex->ret){
 		lex->lex = "BOOL";
 		return true;
-	}
-
-	else
+	}else
 		return false;
-
 }
 
 

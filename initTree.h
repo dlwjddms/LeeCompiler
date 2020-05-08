@@ -1,12 +1,17 @@
+/*
+* - function prototypes
+* - structure for token node, lexeme
+* init*() functions are structure of DFAs
+*/
+
 #include<stdio.h>
 #include<string.h>
 
-
 struct tokenTree{
-		char alpha ;
-		bool ret ;
-		struct tokenTree *childState;
-		struct tokenTree *sibState;
+	char alpha ;
+	bool ret ;
+	struct tokenTree *childState;
+	struct tokenTree *sibState;
 };
 
 struct lexeme {
