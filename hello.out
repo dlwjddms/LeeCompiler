@@ -35,6 +35,7 @@ INT:0
 INT:0
 INT:0
 Comparison:==
+Assignment:=
 Comparison:!=
 Comparison:>
 Bitwise:&

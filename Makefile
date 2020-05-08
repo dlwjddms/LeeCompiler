@@ -1,3 +1,5 @@
+$(shell chmod 777 './envSettings.sh') 
+$(shell ./envSettings.sh)
 lexical_analyzer: main.o lexicalAnalyzer.o initTree.o
 	gcc -o lexical_analyzer main.o lexicalAnalyzer.o initTree.o
 	 
