@@ -1,3 +1,15 @@
+int char bool float
+1 22 0 -1 -10
+"Hello"
+" Hello_123 _of_AB"
+
+True true FALSE false
++ - / *
+
+-- ++
+
+>>
+
 int -12311118888899999999996666666666666666668 111111111112
 bool
 " ss 12gg"
