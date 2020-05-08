@@ -72,7 +72,7 @@ void initBitwiseop(){
 	fLevel2 -> sibState = NULL;
 
 	struct tokenTree *fLevel3 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
-	fLevel3 -> alpha = 'a';
+	fLevel3 -> alpha = 'A';
 	fLevel3 -> ret = true;
 	fLevel3 -> childState = NULL;
 	fLevel3 -> sibState = NULL;
@@ -116,8 +116,7 @@ void initComparisonop(){
 	fLevel1 -> childState = NULL;
 	fLevel1 -> sibState = NULL;
 
-	struct tokenTree *fLevel2 = 
-	(struct tokenTree*)malloc(sizeof(struct tokenTree));
+	struct tokenTree *fLevel2 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
 	fLevel2 -> alpha = 'G';
 	fLevel2 -> ret = true;
 	fLevel2 -> childState = NULL;
@@ -159,7 +158,7 @@ void initAssignop(){
 	/* first level */
 	struct tokenTree *fLevel1 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
 	assiHead  = fLevel1;
-    	fLevel1 -> alpha = 'E';
+	fLevel1 -> alpha = 'E';
 	fLevel1 -> ret= true;
 	fLevel1 -> childState = NULL;
 	fLevel1 -> sibState = NULL;
@@ -171,7 +170,7 @@ void initArithop(){
 	/* first level */
 	struct tokenTree *fLevel1 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
 	aritHead  = fLevel1;
-    	fLevel1 -> alpha = 'P';
+	fLevel1 -> alpha = 'P';
 	fLevel1 -> ret= true;
 	fLevel1 -> childState = NULL;
 	fLevel1 -> sibState = NULL;
@@ -208,7 +207,7 @@ void initTermin(){
 	/* first level */
 	struct tokenTree *fLevel1 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
 	terHead  = fLevel1;
-    	fLevel1 -> alpha = 'C';
+	fLevel1 -> alpha = 'C';
 	fLevel1 -> ret= true;
 	fLevel1 -> childState = NULL;
 	fLevel1 -> sibState = NULL;
@@ -221,7 +220,7 @@ void initBrace(){
 	/* first level */
 	struct tokenTree *fLevel1 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
 	brcHead  = fLevel1;
-    	fLevel1 -> alpha = 'F';
+	fLevel1 -> alpha = 'F';
 	fLevel1 -> ret= true;
 	fLevel1 -> childState = NULL;
 	fLevel1 -> sibState = NULL;
@@ -242,7 +241,7 @@ void initParentheses(){
 	/* first level */
 	struct tokenTree *fLevel1 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
 	parHead  = fLevel1;
-    	fLevel1 -> alpha = 'f';
+	fLevel1 -> alpha = 'f';
 	fLevel1 -> ret= true;
 	fLevel1 -> childState = NULL;
 	fLevel1 -> sibState = NULL;
@@ -263,7 +262,7 @@ void initSeperator(){
 	/* first level */
 	struct tokenTree *fLevel1 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
 	sepHead  = fLevel1;
-    	fLevel1 -> alpha = 'p';
+	fLevel1 -> alpha = 'p';
 	fLevel1 -> ret= true;
 	fLevel1 -> childState = NULL;
 	fLevel1 -> sibState = NULL;

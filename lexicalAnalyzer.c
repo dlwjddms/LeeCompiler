@@ -76,10 +76,10 @@ char convert(char* arr , int start, bool digit){
 			output='C';	//semiColon symbol
 
 		else if(value=='{')
-			output='F';	//left brace symbol
+			output='F';	//leFt brace symbol
 
 		else if(value=='}')
-			output='T';	//right brace symbol
+			output='T';	//righT brace symbol
 
 		else if(value=='(')
 			output='f';	//left parentheses symbol
@@ -546,7 +546,7 @@ bool isTermin(struct lexeme* lex, char* arr, int right, int left){
 //seperator symbol first implement
 //error handling needed
 bool isSeperator(struct lexeme* lex, char* arr, int right, int left){
-	struct tokenTree *searchTree = terHead;
+	struct tokenTree *searchTree = sepHead;
 	int count = 0;
 	lex->ret = false;
 	char converted;
