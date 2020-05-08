@@ -185,10 +185,10 @@ void initArithop(){
 	fLevel3 -> sibState = NULL;
 
 	struct tokenTree *fLevel4 = (struct tokenTree*)malloc(sizeof(struct tokenTree));
-	fLevel3 -> alpha = 'V';
-	fLevel3 -> ret = true;
-	fLevel3 -> childState = NULL;
-	fLevel3 -> sibState = NULL;
+	fLevel4 -> alpha = 'V';
+	fLevel4 -> ret = true;
+	fLevel4 -> childState = NULL;
+	fLevel4 -> sibState = NULL;
 
 	/* link state transitions */
 
