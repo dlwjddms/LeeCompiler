@@ -280,8 +280,6 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 		return false;
 iFloat:
 	if(isF){
-		printf("r : %s \n" , lex->lex);
-		printf("r : %d \n" , lex->len);
 		return true;
 	}else
 		return false;
@@ -575,7 +573,6 @@ bool isComparisonop(struct lexeme* lex, char* arr, int right, int left){
 	while(searchTree != NULL){
 		char converted = convert(arr, left+count, false);
 		while(searchTree != NULL){
-			printf("%c, %c",converted, searchTree->alpha);
 			if(searchTree->alpha == converted)
 				break;
 			else searchTree = searchTree->sibState; //sibling 조사

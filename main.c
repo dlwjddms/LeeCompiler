@@ -72,61 +72,48 @@ struct symbolTable*  lexicalAnalyze(char* arr){
 		if(ret)
 			goto insert;
 
-		printf("1111111111111\n");
 		ret = isString(lex,arr,right,left);
 		if(ret)
 			goto insert;
-			
-		printf("1111111111112\n");
 			
 		ret = isArithmeticop(lex,arr,right,left);
 		if(ret)
 			goto insert;
 
-		printf("1111111111113\n");
 		ret = isBitwiseop(lex,arr,right,left);
 		if(ret)
 			goto insert;
 		
-		printf("1111111111113\n");
 		ret = isComparisonop(lex,arr,right,left);
 		if(ret)
 			goto insert;
 		
-		printf("1111111111114\n");
 		ret = isAssignop(lex,arr,right,left);
 		if(ret)
 			goto insert;
 
-		printf("1111111111115\n");
 		ret = isTermin(lex,arr,right,left);
 		if(ret)
 			goto insert;
 		
-		printf("1111111111116\n");
 		ret = isBrace(lex,arr,right,left);
 		if(ret)
 			goto insert;
 		
-		printf("1111111111117\n");
 		ret = isParentheses(lex,arr,right,left);
 		if(ret)
 			goto insert;
 
-		printf("1111111111118\n");
 		ret = isSeperator(lex,arr,right,left);
 		if(ret)
 			goto insert;
 
-		printf("1111111111119\n");
 		/* when you are here there is no more valid token error is needed  */
-		printf("1111222222111111111\n");
 		free(lex);
 		success = false;
 		break;	
 
 	insert : 
-		printf("1111111111333333111\n");
 		right = left+ lex->len;
 		struct symbolTable* newNode = (struct symbolTable*)malloc(sizeof(struct symbolTable));
 		newNode-> prev = NULL;
@@ -250,7 +237,6 @@ int main(int argc, char* argv[]){
 	if(!success)
 		printf("ERROR!!!! : some code which is not allowed of using is used after ' %s '!!! \n\n",ERROR);
 	assert(success);
-	//symbolTables free is need... right..?
 
 		return 0;
 }
