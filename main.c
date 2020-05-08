@@ -146,8 +146,6 @@ struct symbolTable*  lexicalAnalyze(char* arr){
 		free(lex);
 	}
 
-//	freeTree();
-
 	return  head;
 
 }
@@ -222,13 +220,13 @@ int main(int argc, char* argv[]){
 	if(tmp !=NULL){
 		for( ;tmp != NULL ; tmp = tmp->next){
 			if(strcmp(tmp->name, "WS")){
-			fputs( "<", w_fp);   // 파일에 문자열 저장
-			fputs( tmp->name, w_fp);   // 파일에 문자열 저장
-			fputs( ":", w_fp);   // 파일에 문자열 저장
-			fputs( tmp->value, w_fp);   // 파일에 문자열 저장
+			fputs( "<", w_fp);   
+			fputs( tmp->name, w_fp); 
+			fputs( ":", w_fp);  
+			fputs( tmp->value, w_fp);   
 			ERROR = tmp->value;
-			fputs( ">", w_fp);   // 파일에 문자열 저장
-			fputs( "\n", w_fp);   // 파일에 문자열 저장
+			fputs( ">", w_fp); 
+			fputs( "\n", w_fp);  
 			}
 		}
 

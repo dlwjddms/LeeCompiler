@@ -5,7 +5,7 @@
 #include "initTree.h"
 
 /* this funtion is for isFloat, isInterger ,isString
-   DON'T use for isVariable or isKeyword or isBool !!! 
+   DON'T use for recognizing  isVariable or isKeyword or isBool !!! 
 
  0-> zero
  1 | 2 | ..|9 -> natural_num
@@ -96,19 +96,18 @@ char convert(char* arr , int start, bool digit){
 	return output;
 }
 
-//struct lexeme*isFloat(struct lexeme * lex, char* arr, int right, int left){
 bool isFloat(struct lexeme * lex, char* arr, int right, int left){
 
 	struct tokenTree *tmp = fHead;
 	int count =0;
-	int z_count =0;//count valid 0
-
+	int t_count = 0; //last true statement;
 	lex->ret=false;
 	lex->lex=NULL;
 	lex->len=NULL;
 	bool first = true;
 	/* level*/ 
 	while(tmp!=NULL){
+			printf("arr ; starti %c\n\n",arr[left+count]);
 			char converted = convert(arr,left+count,false);
 				if(converted =='D'){
 					char converted2 = convert(arr,left+count+1,false);
@@ -125,8 +124,8 @@ bool isFloat(struct lexeme * lex, char* arr, int right, int left){
 				}
 				while(tmp!=NULL){
 					if(tmp->alpha==converted){
-						if(converted == 'z'&&tmp->ret== true){
-										z_count = count;
+						if(tmp->ret== true){
+							t_count =count;
 						}
 						/* Error handling part */
 						if(first){
@@ -162,10 +161,13 @@ bool isFloat(struct lexeme * lex, char* arr, int right, int left){
 	}
 
 	if(lex->ret){
+		/* For proper float */
 		lex->lex = "FLOAT";
 		return lex;
-	}else if(arr[left+count-2]=='0'&&z_count!=0){
-		lex->len = z_count+1;
+	}
+	else if(arr[left+count-2]=='0'&&t_count!=0){
+		/* For float like xxx.x00000 */
+		lex->len = t_count+1;
 		lex->lex = "FLOAT";
 		return lex;
 	}
@@ -192,15 +194,18 @@ bool isVariable(struct lexeme * lex, char* arr, int right, int left){
 			break;
 		}
 		/* Store things for lex */
-		// I'm not sure this position is right
 		lex->len = count;
 		lex->lex = NULL;
 		lex->ret=tmp->ret;
-		//
 		left++;
 		tmp = tmp->childState;
 	}
 
+	/*in case of int123 this have to be identifier*/
+	char converted= convert(arr,count+left-1,true);
+	if(converted == 'd'||converted == 'u'|| converted == 'l'){
+		return false;
+	}
 	if(lex->ret){
 		lex->lex = "typeVar";
 		return true;
@@ -218,6 +223,7 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 	bool isF =false;
 	/* level*/ 
 	while(tmp!=NULL){
+		
 			char converted = convert(arr,left+count,false);
 				if(converted =='D'){
 						isF = isFloat( lex, arr, right,left);			
@@ -225,38 +231,24 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 				}
 				while(tmp!=NULL){
 					if(tmp->alpha==converted){
-					/* Error handling part */
-					if(first){
-						if(converted =='z'){
-							converted = convert(arr,left+count+1,false);
-							if(converted == 'D'){
-								isF = isFloat( lex, arr, right,left);
-								goto iFloat;
+						if(first){
+							if(converted =='z'){
+								converted = convert(arr,left+count+1,false);
+								if(converted == 'D'){
+									isF = isFloat( lex, arr, right,left);
+									goto iFloat;
+									}else
+									first =false;
+							}else if(converted =='s'){
+								converted = convert(arr,left+count+1,false);
+								char findingdot = convert(arr,left+count+2,false);
+
+								if(findingdot == 'D'){
+									isF = isFloat( lex, arr, right,left);
+									goto iFloat;
+								}
 							}else
 								first =false;
-						}else if(converted =='s'){
-							converted = convert(arr,left+count+1,false);
-							char findingdot = convert(arr,left+count+2,false);
-
-							if(findingdot == 'D'){
-								isF = isFloat( lex, arr, right,left);
-								goto iFloat;
-							}
-/*
-							else{
-								if(converted =='z'){
-									printf("ERROR!!!! :there is no zero with '-' !!!\n");
-									printf("the error is on line %d on  this part : ",lex->line);
-									for(int i =0 ; i<=count ;i++)
-										printf("%c",arr[left+i]);
-									printf("\n\n");
-									assert(converted !='z');
-								}
-						 
-						 }
-	*/
-						}else
-							first =false;
 						first= false;
 					}
 						break;
@@ -268,13 +260,11 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 				 break;
 			}
 			/* Store things for lex */
-			// I'm not sure this position is right
 			lex->len = count;
 			lex->lex = NULL;
 			lex->ret=tmp->ret;
 
 			tmp = tmp->childState;
-			
 	}
 
 	if(lex->ret){
@@ -282,6 +272,7 @@ bool isInteger(struct lexeme* lex, char* arr, int right, int left){
 		return true;
 	}else
 		return false;
+
 iFloat:
 	if(isF){
 		return true;
@@ -391,6 +382,10 @@ bool isBoolean(struct lexeme* lex, char* arr, int right, int left){
 		tmp = tmp->childState;
 	}
 
+	char converted= convert(arr,count+left-1,true);
+	if(converted == 'd'||converted == 'u'|| converted == 'l'){
+		return false;
+	}
 	if(lex->ret){
 		lex->lex = "BOOL";
 		return true;
@@ -419,14 +414,17 @@ bool isKeyword(struct lexeme* lex, char* arr, int right, int left){
 			break;
 		}
 		/* Store things for lex */
-		// I'm not sure this position is right
 		lex->len = count;
 		lex->lex = NULL;
 		lex->ret=tmp->ret;
 
 		tmp = tmp->childState;
 	}
+	char converted= convert(arr,count+left-1,true);
 
+	if(converted == 'd'||converted == 'u'|| converted == 'l'){
+		return false;
+	}		
 	if(lex->ret){
 		lex->lex = "KeyWord";
 		return true;
@@ -624,7 +622,7 @@ bool isTermin(struct lexeme* lex, char* arr, int right, int left){
 //seperator symbol first implement
 //error handling needed
 bool isSeperator(struct lexeme* lex, char* arr, int right, int left){
-	struct tokenTree *searchTree = terHead;
+	struct tokenTree *searchTree = sepHead;
 	int count = 0;
 	lex->ret = false;
 	char converted;
