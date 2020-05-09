@@ -647,8 +647,9 @@ bool isBrace(struct lexeme* lex, char* arr, int right, int left){
 	struct tokenTree *searchTree = brcHead;
 	int count = 0;
 	lex->ret = false;
+	char converted;
 	while(searchTree != NULL){
-		char converted = convert(arr, left+count, false);
+		converted = convert(arr, left+count, false);
 		while(searchTree != NULL){
 			if(searchTree->alpha == converted) break;
 			else searchTree = searchTree->sibState; //sibling 조사
@@ -662,11 +663,13 @@ bool isBrace(struct lexeme* lex, char* arr, int right, int left){
 		lex->ret = searchTree->ret;
 		searchTree = searchTree->childState; //child 조사
 	}
-	if(lex->ret){
-		lex->lex = "Brace";
-		return true;
-	}else
-		return false;
+	if(converted == 'F'){
+		lex->lex = "LBRAC";
+	}else if (converted == 'T')
+		lex->lex = "RBRAC";
+
+	if(lex->ret) return true;
+	else return false;
 }
 
 //sangjin
@@ -676,8 +679,9 @@ bool isParentheses(struct lexeme* lex, char* arr, int right, int left){
 	struct tokenTree *searchTree = parHead;
 	int count = 0;
 	lex->ret = false;
+	char converted;
 	while(searchTree != NULL){
-		char converted = convert(arr, left+count, false);
+		converted = convert(arr, left+count, false);
 		while(searchTree != NULL){
 			if(searchTree->alpha == converted) break;
 			else searchTree = searchTree->sibState; //sibling 조사
@@ -691,9 +695,11 @@ bool isParentheses(struct lexeme* lex, char* arr, int right, int left){
 		lex->ret = searchTree->ret;
 		searchTree = searchTree->childState; //child 조사
 	}
-	if(lex->ret){
-		lex->lex = "Parentheses";
-		return true;
-	}else
-		return false;
+	if(converted == 'f'){
+		lex->lex = "LPAREN";
+	}else if (converted == 't')
+		lex->lex = "RPAREN";
+
+	if(lex->ret) return true;
+	else return false;
 }
