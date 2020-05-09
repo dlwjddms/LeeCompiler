@@ -152,7 +152,7 @@ struct symbolTable*  lexicalAnalyze(char* arr){
 
 
 int main(int argc, char* argv[]){
-
+	printf("starting lexical analysis...");
 	struct symbolTable *head;// =(struct symbolTable*)malloc(sizeof(struct symbolTable));
 
 
@@ -236,8 +236,9 @@ int main(int argc, char* argv[]){
 
 	if(!success)
 		printf("ERROR!!!! : some code which is not allowed of using is used after ' %s '!!! \n\n",ERROR);
+	printf("\ncompleted...");
+	printf("\nplease check outputfile: *.out\n\n");
 	assert(success);
-
 		return 0;
 }
 

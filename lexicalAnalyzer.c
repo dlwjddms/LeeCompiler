@@ -107,7 +107,6 @@ bool isFloat(struct lexeme * lex, char* arr, int right, int left){
 	bool first = true;
 	/* level*/ 
 	while(tmp!=NULL){
-			printf("arr ; starti %c\n\n",arr[left+count]);
 			char converted = convert(arr,left+count,false);
 				if(converted =='D'){
 					char converted2 = convert(arr,left+count+1,false);
