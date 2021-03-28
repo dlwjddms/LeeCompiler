@@ -1,0 +1,37 @@
+<typeVar:int	®>
+<IDENTIFIER:aw	®>
+<Seperator:,w	®>
+<IDENTIFIER:bw	®>
+<typeVar:int	®>
+<IDENTIFIER:aw	®>
+<Seperator:,w	®>
+<IDENTIFIER:bw	®>
+<INT:123	®>
+<FLOAT:-0.0®>
+<FLOAT:0.0	®>
+<FLOAT:-0.234>
+<Arithmatic:-w	®>
+<INT:0w	®>
+<INT:0w	®>
+<INT:0w	®>
+<INT:0w	®>
+<FLOAT:2.99®>
+<INT:0w	®>
+<Comparison:==w	®>
+<Comparison:!=w	®>
+<Comparison:>>
+<Bitwise:&>
+<Arithmatic:*>
+<Arithmatic:*>
+<Arithmatic:*>
+<Arithmatic:/>
+<Arithmatic:/>
+<INT:0>
+<IDENTIFIER:abc>
+<Arithmatic:/>
+<Arithmatic:/>
+<LPAREN:(>
+<RPAREN:)>
+<LBRAC:{>
+<RBRAC:}>
+<IDENTIFIER:if123abc>
